@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:2500px; height:1560px; position:relative; background:#fbfcfe; font-family:'Segoe UI', Arial, sans-serif; }
+  .title { position:absolute; top:16px; left:0; width:100%; text-align:center; font-size:26px; font-weight:800; color:#1a213d; letter-spacing:.4px; }
+  .title small { display:block; font-size:14px; font-weight:600; color:#5a6b85; letter-spacing:0; margin-top:3px; }
+  .legend { position:absolute; top:78px; left:0; width:100%; text-align:center; font-size:14px; color:#37474f; }
+  .legend b { color:#1a213d; }
+  .legend .sep { color:#b0bccd; margin:0 14px; }
+  .zone { position:absolute; border:2.5px dashed; border-radius:18px; }
+  .zlabel { position:absolute; top:-16px; left:26px; padding:5px 16px; border-radius:999px; color:#fff; font-size:15px; font-weight:800; letter-spacing:1.2px; box-shadow:0 3px 8px rgba(0,0,0,.18); }
+  .zdesc { position:absolute; top:10px; right:20px; font-size:12.5px; font-style:italic; color:#607080; }
+  .tbl { position:absolute; background:#ffffff; border:1.6px solid #3a4a5f; border-radius:10px; box-shadow:0 5px 16px rgba(15,25,45,.14); overflow:hidden; z-index:10; }
+  .tbl h3 { margin:0; padding:7px 12px 6px; color:#fff; font-size:15.5px; font-weight:800; letter-spacing:.5px; }
+  .row { display:flex; justify-content:space-between; align-items:baseline; padding:3px 12px 2px; height:24px; border-top:1px solid #edf0f4; }
+  .row:first-child { border-top:0; }
+  .f { font-size:12.5px; font-weight:600; color:#22314a; }
+  .f .pk { color:#b8860b; font-weight:800; margin-right:3px; }
+  .f .fk { color:#0b7da1; font-weight:800; margin-right:3px; }
+  .t { font-family:Consolas, 'Courier New', monospace; font-size:11.5px; color:#5c6b80; }
+  .note { position:absolute; font-size:12px; font-style:italic; color:#607080; z-index:10; }
+  svg { position:absolute; inset:0; z-index:5; }
+  svg text { font-family:'Segoe UI', Arial, sans-serif; }
+  .card { fill:#37474f; font-size:14px; font-weight:800; paint-order:stroke; stroke:#fbfcfe; stroke-width:6px; }
+  .card2 { fill:#0b7da1; font-size:14px; font-weight:800; paint-order:stroke; stroke:#fbfcfe; stroke-width:6px; }
+  .cap { fill:#455a64; font-size:11.5px; font-style:italic; paint-order:stroke; stroke:#fbfcfe; stroke-width:5px; }
+  .mult { fill:#1a213d; font-size:14px; font-weight:800; paint-order:stroke; stroke:#fbfcfe; stroke-width:5px; }
+</style>
+</head>
+<body>
+
+<div class="title">MDNGHT K-RAVINGS — Database Schema
+  <small>SQLite · 11 tables · one file: backend/database.sqlite · schema defined in backend/config/db.js</small>
+</div>
+<div class="legend">
+  <b>*</b> primary key <span class="sep">|</span> <b>**</b> foreign key <span class="sep">|</span>
+  <b>───</b> required link (1 → n) <span class="sep">|</span> <b>╌╌╌</b> optional link <span class="sep">|</span>
+  <b>····</b> logical match (no foreign key) <span class="sep">|</span> no line = standalone table
+</div>
+
+<!-- ══════════ ZONES ══════════ -->
+<div class="zone" style="left:40px; top:140px; width:400px; height:714px; background:#e7f4e8; border-color:#66bb6a;">
+  <span class="zlabel" style="background:#2e7d32;">MENU</span>
+  <span class="zdesc">what we sell</span>
+</div>
+
+<div class="zone" style="left:490px; top:140px; width:1160px; height:760px; background:#e5f0fb; border-color:#64b5f6;">
+  <span class="zlabel" style="background:#1565c0;">ORDERING</span>
+  <span class="zdesc">who buys and what they ordered</span>
+</div>
+
+<div class="zone" style="left:1700px; top:140px; width:760px; height:760px; background:#f4ecf8; border-color:#ba68c8;">
+  <span class="zlabel" style="background:#6a1b9a;">SUPPORT</span>
+  <span class="zdesc">verification, settings, costs</span>
+</div>
+
+<div class="zone" style="left:40px; top:950px; width:900px; height:560px; background:#fdf3dd; border-color:#e0a32e;">
+  <span class="zlabel" style="background:#c17900;">ADMIN &amp; SECURITY</span>
+  <span class="zdesc">staff access and the action log</span>
+</div>
+
+<!-- ══════════ LINES (drawn under tables) ══════════ -->
+<svg width="2500" height="1800">
+  <!-- categories 1—n menu_items -->
+  <line x1="230" y1="402" x2="230" y2="440" stroke="#37474f" stroke-width="2.5"/>
+  <text class="mult" x="240" y="418">1</text>
+  <text class="mult" x="240" y="438">n</text>
+  <text class="cap" x="252" y="431">menu_items.category_id → categories.id</text>
+
+  <!-- customers ╌→ orders (optional) — elbow through the free corridor -->
+  <polyline points="670,532 670,590 960,590" fill="none" stroke="#78909c" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <text class="mult" x="680" y="552">1</text>
+  <text class="mult" x="942" y="582">n</text>
+  <text class="cap" x="798" y="612" text-anchor="middle">orders.customer_id → customers.id</text>
+  <text class="cap" x="798" y="627" text-anchor="middle">(optional — admin test orders have none)</text>
+
+  <!-- orders 1—n order_items -->
+  <line x1="960" y1="680" x2="830" y2="705" stroke="#37474f" stroke-width="2.5"/>
+  <text class="mult" x="938" y="672">1</text>
+  <text class="mult" x="838" y="722">n</text>
+  <text class="cap" x="895" y="742" text-anchor="middle">order_id → orders.id</text>
+
+  <!-- menu_items 1—n order_items -->
+  <line x1="390" y1="700" x2="510" y2="722" stroke="#37474f" stroke-width="2.5"/>
+  <text class="mult" x="398" y="692">1</text>
+  <text class="mult" x="486" y="738">n</text>
+  <text class="cap" x="446" y="762" text-anchor="middle">menu_item_id →</text>
+  <text class="cap" x="446" y="777" text-anchor="middle">menu_items.id</text>
+
+  <!-- admin_users 1—n admin_sessions -->
+  <line x1="240" y1="1184" x2="240" y2="1250" stroke="#37474f" stroke-width="2.5"/>
+  <text class="mult" x="250" y="1202">1</text>
+  <text class="mult" x="250" y="1246">n</text>
+  <text class="cap" x="262" y="1228">admin_id → admin_users.id</text>
+
+  <!-- otp_requests ···· customers (logical) -->
+  <polyline points="1910,210 1910,120 670,120 670,210" fill="none" stroke="#9c27b0" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <text class="card2" x="1290" y="112" text-anchor="middle">otp_requests.phone matches customers.phone — logical link, no foreign key</text>
+</svg>
+
+<!-- ══════════ MENU ZONE TABLES ══════════ -->
+<div class="tbl" style="left:70px; top:200px; width:320px;">
+  <h3 style="background:#2e7d32;">categories</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">slug</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">description</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">accent</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">display_order</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">is_active</span><span class="t">INTEGER</span></div>
+</div>
+
+<div class="tbl" style="left:70px; top:440px; width:320px;">
+  <h3 style="background:#00695c;">menu_items</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f"><span class="fk">**</span>category_id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">description</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">price</span><span class="t">REAL</span></div>
+  <div class="row"><span class="f">image_key</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">badge</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">tags</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">option_groups</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">is_available</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">is_featured</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">display_order</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">cost_price</span><span class="t">REAL</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+  <div class="row"><span class="f">updated_at</span><span class="t">DATETIME</span></div>
+</div>
+
+<!-- ══════════ ORDERING ZONE TABLES ══════════ -->
+<div class="tbl" style="left:510px; top:210px; width:320px;">
+  <h3 style="background:#1565c0;">customers</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">username</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">password_hash</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">first_name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">last_name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">phone</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">barangay</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">cart_json</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">token_version</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">address</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">landmark</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+</div>
+
+<div class="tbl" style="left:960px; top:210px; width:330px;">
+  <h3 style="background:#0d47a1;">orders</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">order_number</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">first_name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">last_name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">phone</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">barangay</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">address</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">landmark</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">notes</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">payment_method</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">subtotal</span><span class="t">REAL</span></div>
+  <div class="row"><span class="f">delivery_fee</span><span class="t">REAL</span></div>
+  <div class="row"><span class="f">delivery_fee_set</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">total</span><span class="t">REAL</span></div>
+  <div class="row"><span class="f">status</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f"><span class="fk">**</span>customer_id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">is_demo</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+  <div class="row"><span class="f">updated_at</span><span class="t">DATETIME</span></div>
+</div>
+
+<div class="tbl" style="left:510px; top:640px; width:320px;">
+  <h3 style="background:#0288d1;">order_items</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f"><span class="fk">**</span>order_id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f"><span class="fk">**</span>menu_item_id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">unit_price</span><span class="t">REAL</span></div>
+  <div class="row"><span class="f">quantity</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">options_text</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">line_total</span><span class="t">REAL</span></div>
+</div>
+
+<!-- ══════════ SUPPORT ZONE TABLES ══════════ -->
+<div class="tbl" style="left:1740px; top:210px; width:340px;">
+  <h3 style="background:#6a1b9a;">otp_requests</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">phone</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">purpose</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">code_hash</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">expires_at</span><span class="t">DATETIME</span></div>
+  <div class="row"><span class="f">attempts_left</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">used_at</span><span class="t">DATETIME</span></div>
+  <div class="row"><span class="f">sms_message_id</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+</div>
+
+<div class="tbl" style="left:1740px; top:510px; width:340px;">
+  <h3 style="background:#546e7a;">settings</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>key</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">value</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">updated_at</span><span class="t">DATETIME</span></div>
+</div>
+<div class="note" style="left:1740px; top:620px; width:340px;">(standalone key–value store)</div>
+
+<div class="tbl" style="left:1740px; top:680px; width:340px;">
+  <h3 style="background:#ad1457;">expenses</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">label</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">amount</span><span class="t">REAL</span></div>
+  <div class="row"><span class="f">spent_on</span><span class="t">DATE</span></div>
+  <div class="row"><span class="f">is_demo</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+</div>
+<div class="note" style="left:1740px; top:862px; width:340px;">(standalone — feeds the profit report)</div>
+
+<!-- ══════════ ADMIN ZONE TABLES ══════════ -->
+<div class="tbl" style="left:80px; top:1030px; width:320px;">
+  <h3 style="background:#ef6c00;">admin_users</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">username</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">password_hash</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">display_name</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+</div>
+
+<div class="tbl" style="left:80px; top:1250px; width:320px;">
+  <h3 style="background:#795548;">admin_sessions</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">token_hash</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f"><span class="fk">**</span>admin_id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">csrf_token</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+  <div class="row"><span class="f">expires_at</span><span class="t">DATETIME</span></div>
+</div>
+
+<div class="tbl" style="left:460px; top:1030px; width:320px;">
+  <h3 style="background:#c17900;">admin_audit</h3>
+  <div class="row"><span class="f"><span class="pk">*</span>id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">admin_id</span><span class="t">INTEGER</span></div>
+  <div class="row"><span class="f">username</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">action</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">detail</span><span class="t">TEXT</span></div>
+  <div class="row"><span class="f">created_at</span><span class="t">DATETIME</span></div>
+</div>
+<div class="note" style="left:460px; top:1212px; width:320px;">(standalone — append-only log of every admin action)</div>
+
+</body>
+</html>

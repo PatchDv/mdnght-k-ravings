@@ -1,0 +1,1035 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sign in · MDNGHT K-RAVINGS</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logokrave.jpg">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    /* customer fields styled like the storefront welcome form */
+    .admin-field select {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--white) 16%, transparent);
+      background: color-mix(in srgb, var(--white) 6%, var(--navy));
+      color: var(--white);
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .admin-field select:focus { outline: 2px solid var(--yellow); outline-offset: 0; border-color: transparent; }
+    .admin-field select option { color: #14141c; }
+
+    .pass-wrap { position: relative; }
+    .pass-toggle {
+      position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
+      display: grid; place-items: center;
+      width: 30px; height: 30px;
+      border: 0; border-radius: 8px;
+      background: transparent;
+      color: color-mix(in srgb, var(--white) 55%, transparent);
+      cursor: pointer;
+      transition: color .4s, background .4s;
+    }
+    .pass-toggle:hover { color: var(--yellow); background: color-mix(in srgb, var(--white) 8%, transparent); }
+    .pass-toggle svg { width: 15px; height: 15px; }
+    .pass-meter { display: flex; align-items: center; gap: 8px; margin: -6px 0 12px; }
+    .pass-meter i { flex: 1; height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--navy) 12%, transparent); transition: background .25s var(--ease); display: block; }
+    .pass-meter span { font-size: 10px; font-weight: 700; letter-spacing: .4px; color: var(--muted-soft); min-width: 52px; text-align: right; }
+    .pass-meter[data-strength="weak"] i { background: #e5484d; }
+    .pass-meter[data-strength="weak"] span { color: #ff8b8f; }
+    .pass-meter[data-strength="medium"] i { background: #f5a524; }
+    .pass-meter[data-strength="medium"] span { color: var(--yellow); }
+    .pass-meter[data-strength="strong"] i { background: #30a46c; }
+    .pass-meter[data-strength="strong"] span { color: #3dd68c; }
+    .pass-toggle:focus-visible { outline: 2px solid var(--yellow); outline-offset: 0; }
+
+    .login-switch { margin-top: 14px; text-align: center; }
+    .login-switch button {
+      border: 0; background: transparent; cursor: pointer;
+      color: var(--navy); font-weight: 800; font-size: 12px;
+      text-decoration: underline; text-underline-offset: 2px;
+      transition: opacity .4s;
+    }
+    .login-switch button:hover { opacity: .7; }
+
+    /* A link styled as a button (not inside .login-switch). */
+    button.login-switch {
+      padding: 0; border: 0; background: transparent; cursor: pointer;
+      color: var(--navy); font-weight: 800; font-size: 12px;
+      text-decoration: underline; text-underline-offset: 2px;
+    }
+    button.login-switch:hover { opacity: .7; }
+
+    .login-panel { display: none; }
+    .login-panel.is-active { display: block; animation: panel-in .5s cubic-bezier(.25,.9,.3,1) both; }
+    @keyframes panel-in {
+      from { opacity: 0; transform: translateX(14px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Location card: same layout as Profile → Update my details */
+    .location-card {
+      margin: 4px 0 0;
+      padding: 14px;
+      border: 1px solid color-mix(in srgb, var(--white) 12%, transparent);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--white) 4%, var(--navy));
+    }
+    .location-card-head { display: flex; align-items: flex-start; gap: 11px; }
+    .location-pin {
+      display: grid; place-items: center;
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: var(--yellow);
+      color: var(--navy);
+    }
+    .location-pin svg { width: 18px; height: 18px; }
+    .location-card-head strong { display: block; font-size: 13px; font-weight: 800; color: var(--white); }
+    .location-card-head small { color: color-mix(in srgb, var(--white) 55%, transparent); font-size: 10.5px; font-weight: 600; }
+    .location-breadcrumb {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+      margin: 13px 0;
+      padding: 8px 10px;
+      border-radius: 9px;
+      background: color-mix(in srgb, var(--white) 8%, var(--navy));
+      color: color-mix(in srgb, var(--white) 60%, transparent);
+      font-size: 9.5px; font-weight: 700; letter-spacing: .02em;
+    }
+    .location-breadcrumb span { display: inline-flex; align-items: center; gap: 4px; }
+    .location-breadcrumb i {
+      padding: 2px 5px; border-radius: 4px;
+      background: var(--yellow); color: var(--navy);
+      font-style: normal; font-size: 8px; letter-spacing: .08em;
+    }
+    .location-breadcrumb b { color: color-mix(in srgb, var(--white) 25%, transparent); font-weight: 500; }
+    .location-breadcrumb .current { color: var(--yellow); }
+    .barangay-field { gap: 5px; }
+    .barangay-field .select-wrap { padding: 0 10px; border: 1px solid color-mix(in srgb, var(--white) 16%, transparent); border-radius: 10px; background: color-mix(in srgb, var(--white) 6%, var(--navy)); }
+    .barangay-field .select-wrap svg { display: none; }
+    .barangay-field select { min-height: 43px; font-size: 12.5px; border: 0; background: transparent; padding-left: 0; }
+    /* The location card is dark, so its labels must not inherit the light-panel navy. */
+    .location-card .admin-field > span { color: var(--white); }
+    .location-card .admin-field > span small { color: color-mix(in srgb, var(--white) 55%, transparent); }
+
+    .login-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    /* Phone digits: even, tabular spacing so the number never drifts or
+       overflows the box at any screen width. */
+    .admin-field input[type="tel"] {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .03em;
+      min-width: 0;
+      width: 100%;
+    }
+    .staff-foot { margin-top: 22px; }
+    @media (max-width: 380px) {
+      .login-row2 { grid-template-columns: 1fr; }
+    }
+
+    /* wizard screens inside a panel */
+    .wizard-progress {
+      margin: 0 0 8px;
+      font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .wizard-progress b { color: var(--yellow); }
+    .wizard-track { display: flex; gap: 5px; margin: 0 0 16px; }
+    .wizard-track i { flex: 1; height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--navy) 12%, transparent); }
+    .wizard-track i.is-done { background: var(--yellow); }
+    .wizard-title { margin: 0 0 5px; font-size: 17px; font-weight: 800; color: var(--navy); letter-spacing: -.01em; }
+    .wizard-help { margin: 0 0 14px; font-size: 11px; line-height: 1.5; color: var(--muted); }
+    .wizard-step { display: none; }
+    .wizard-step.is-active { display: block; animation: panel-in .5s cubic-bezier(.25,.9,.3,1) both; }
+
+  </style>
+</head>
+<body>
+  <!-- svg sprite -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.2 10V7.5a3.8 3.8 0 0 1 7.6 0V10" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 1 1 13 0C18.5 15 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  </svg>
+
+  <section class="admin-login">
+    <div class="login-art">
+      <div class="login-art-image"></div>
+      <div class="login-art-overlay"></div>
+      <div class="login-brand">
+        <img src="assets/images/logokrave.jpg" alt="">
+        <div><strong>MDNGHT</strong><span>K-RAVINGS</span></div>
+      </div>
+      <div class="login-copy">
+        <p class="eyebrow">MADAPDAP'S LATE-NIGHT KITCHEN</p>
+        <h1>One door.<br>Every craving.<br><span>Every order.</span></h1>
+        <p>Your own account, your own cart, your own order history. Cravings stay yours.</p>
+        <div class="login-points">
+          <div><span>01</span><p><strong>Order for delivery</strong><small>Cash on delivery, straight from the menu.</small></p></div>
+          <div><span>02</span><p><strong>Your cart follows you</strong><small>Sign in on any device, pick up where you left off.</small></p></div>
+        </div>
+      </div>
+      <p class="login-footer">Madapdap, Mabalacat · Pampanga</p>
+    </div>
+
+    <div class="login-form-side">
+      <div class="login-form-wrap">
+        <span class="login-badge"><svg><use href="#i-lock"/></svg> SECURE SIGN-IN</span>
+        <h2>Welcome in.</h2>
+        <p class="login-sub">Sign in to order — or create your account in one minute.</p>
+
+        <!-- SIGN IN -->
+        <section class="login-panel is-active" id="panel-login" aria-label="Customer sign in">
+          <form id="customer-form" novalidate>
+            <label class="admin-field">
+              <span>Mobile number</span>
+              <input id="c-phone" type="tel" inputmode="numeric" maxlength="12" autocomplete="tel" required placeholder="0917 ··· ····">
+            </label>
+            <label class="admin-field">
+              <span>Password</span>
+              <div class="pass-wrap">
+                <input id="c-pass" type="password" autocomplete="current-password" maxlength="120" required placeholder="••••••••">
+                <button type="button" class="pass-toggle" data-pass-for="c-pass" aria-label="Show password"><svg><use href="#i-eye"/></svg></button>
+              </div>
+            </label>
+            <p id="login-error" class="login-error" role="alert"></p>
+            <button type="submit" class="admin-btn admin-btn-primary admin-btn-full" id="login-button" disabled>
+              Sign in &amp; order
+              <svg><use href="#i-arrow"/></svg>
+            </button>
+          </form>
+          <p class="login-switch">New here? <button type="button" id="show-register">Create your account</button> · <button type="button" id="show-reset">Forgot password?</button></p>
+        </section>
+
+        <!-- REGISTER: phone-OTP wizard. The server enforces every step; the
+             UI only shows the screens. -->
+        <section class="login-panel" id="panel-register" aria-label="Create your account">
+          <p class="wizard-progress" id="register-progress"><b>Step 1 of 5</b> · Verify your number</p>
+          <div class="wizard-track" id="register-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+          <div class="wizard-step is-active" data-reg-step="1">
+            <form id="reg-phone-form" novalidate>
+              <label class="admin-field"><span>Mobile number</span><input id="r-phone" type="tel" inputmode="numeric" required maxlength="12" autocomplete="tel" placeholder="0917 ··· ····"></label>
+              <p style="margin:0 0 10px; font-size:10.5px; color:color-mix(in srgb, var(--white) 55%, transparent);">We'll text you a 6-digit code. Use 09XXXXXXXXX or +639XXXXXXXXX.</p>
+              <p id="reg-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full" id="reg-send">
+                Send my code
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+            </form>
+            <p class="login-switch">Already have an account? <button type="button" id="show-login-wiz">Sign in</button></p>
+          </div>
+
+          <div class="wizard-step" data-reg-step="2">
+            <form id="reg-code-form" novalidate>
+              <label class="admin-field" id="reg-code-field"><span>Code sent to <b id="reg-code-phone"></b></span>
+                <input id="r-code" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required placeholder="······">
+              </label>
+              <p id="reg-verified-note" hidden style="margin:0 0 10px; font-size:10.5px; font-weight:800; color:#7dd88f;">Your number is verified — no need to re-enter the code.</p>
+              <p id="reg-dev-note" hidden style="margin:0 0 10px; font-size:10.5px; font-weight:800; color:#f5c04a;">Dev mode: no SMS is sent — code shown above. Configure TEXTBEE_API_KEY for real delivery.</p>
+              <p id="reg-code-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full">
+                Verify code
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+              <button type="button" class="admin-btn admin-btn-ghost admin-btn-full" id="reg-resend" style="margin-top:8px" disabled>Resend code (60s)</button>
+            </form>
+            <p class="login-switch"><button type="button" id="reg-change-number">‹ Change number</button></p>
+          </div>
+
+          <div class="wizard-step" data-reg-step="3">
+            <form id="reg-pass-form" novalidate>
+              <h3 class="wizard-title">Create your password</h3>
+              <p class="wizard-help">Use 8–12 characters with at least one letter and one number. You will need this password to sign in.</p>
+              <label class="admin-field"><span>Password</span>
+                <div class="pass-wrap">
+                  <input id="r-pass" type="password" autocomplete="new-password" minlength="8" maxlength="12" required placeholder="8–12 characters" aria-describedby="reg-pass-help">
+                  <button type="button" class="pass-toggle" data-pass-for="r-pass" aria-label="Show password"><svg><use href="#i-eye"/></svg></button>
+                </div>
+              </label>
+              <div class="pass-meter" aria-live="polite"><i id="reg-pass-bar"></i><span id="reg-pass-strength"></span></div>
+              <label class="admin-field"><span>Confirm password</span>
+                <div class="pass-wrap">
+                  <input id="r-pass2" type="password" autocomplete="new-password" minlength="8" maxlength="12" required placeholder="Type it again">
+                  <button type="button" class="pass-toggle" data-pass-for="r-pass2" aria-label="Show password"><svg><use href="#i-eye"/></svg></button>
+                </div>
+              </label>
+              <p id="reg-pass-help" class="wizard-help" style="margin-top:-2px;">Mix uppercase, lowercase, numbers and symbols (e.g. ! @ # $) for a stronger password.</p>
+              <button type="button" id="reg-suggest" class="login-switch" style="margin:0 0 10px; text-align:left;">Suggest a strong password</button>
+              <p id="reg-pass-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full">
+                Continue
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+            </form>
+            <p class="login-switch"><button type="button" id="reg-back-2">‹ Back to code</button></p>
+          </div>
+
+          <div class="wizard-step" data-reg-step="4">
+            <form id="reg-name-form" novalidate>
+              <div class="login-row2">
+                <label class="admin-field"><span>First name</span><input id="r-first" required maxlength="60" autocomplete="given-name" placeholder="Juan"></label>
+                <label class="admin-field"><span>Last name</span><input id="r-last" required maxlength="60" autocomplete="family-name" placeholder="Dela Cruz"></label>
+              </div>
+              <p id="reg-name-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full">
+                Continue
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+            </form>
+            <p class="login-switch"><button type="button" id="reg-back-3">‹ Back to password</button></p>
+          </div>
+
+          <div class="wizard-step" data-reg-step="5">
+            <form id="register-form" novalidate>
+              <h3 class="wizard-title">Where should we deliver?</h3>
+              <p class="wizard-help">Add your complete address so the rider can find you. The delivery fee is set by the admin per order.</p>
+              <div class="location-card">
+                <div class="location-card-head">
+                  <span class="location-pin"><svg><use href="#i-pin"/></svg></span>
+                  <div>
+                    <strong>Delivery location</strong>
+                    <small>We deliver around Mabalacat City, Pampanga.</small>
+                  </div>
+                </div>
+                <label class="admin-field barangay-field">
+                  <span>Complete delivery address <small style="color:color-mix(in srgb, var(--white) 55%, transparent); font-weight:600">(required)</small></span>
+                  <textarea id="r-address" required maxlength="240" rows="3" autocomplete="street-address" placeholder="Blk, Lot, Phase, Street, Madapdap Resettlement Center, Dapdap, Mabalacat City, Pampanga" style="width:100%; resize:vertical;"></textarea>
+                  <small style="color:color-mix(in srgb, var(--white) 55%, transparent); font-size:10px;">Include your block, lot, phase, street, and barangay or subdivision.</small>
+                </label>
+                <label class="admin-field barangay-field"><span>Nearby place or landmark <small style="color:color-mix(in srgb, var(--white) 55%, transparent); font-weight:600">(optional)</small></span><input id="r-landmark" type="text" maxlength="120" placeholder="Example: Near Madapdap Elementary School"></label>
+              </div>
+              <p id="register-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full" id="register-submit" style="margin-top:12px">
+                Create my account
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+            </form>
+            <p class="login-switch"><button type="button" id="reg-back-4">‹ Back to name</button></p>
+            <p class="login-switch">Already have an account? <button type="button" id="show-login-reg">Sign in</button></p>
+          </div>
+
+          <div class="wizard-step" data-reg-step="6">
+            <div style="text-align:center; padding:18px 0 6px;">
+              <img src="assets/images/logokrave.jpg" alt="" style="width:52px; height:52px; margin-bottom:12px;">
+              <h2 style="margin:0 0 6px;">Your account has been successfully created!</h2>
+              <p style="margin:0; font-size:12px; color:color-mix(in srgb, var(--white) 60%, transparent);">Taking you to the storefront…</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FORGOT PASSWORD: same phone-OTP proof, then a new password. -->
+        <section class="login-panel" id="panel-reset" aria-label="Reset your password">
+          <p class="wizard-progress" id="reset-progress"><b>Step 1 of 3</b> · Verify your number</p>
+          <div class="wizard-track" id="reset-track" aria-hidden="true"><i></i><i></i><i></i></div>
+
+          <div class="wizard-step is-active" data-reset-step="1">
+            <form id="reset-phone-form" novalidate>
+              <label class="admin-field"><span>Mobile number</span><input id="f-phone" type="tel" inputmode="numeric" required maxlength="12" autocomplete="tel" placeholder="0917 ··· ····"></label>
+              <p id="reset-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full" id="reset-send">
+                Send my code
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+            </form>
+            <p class="login-switch">Remembered it after all? <button type="button" id="show-login-reset">Sign in</button></p>
+            <p class="login-switch"><button type="button" id="reset-back-login">‹ Back to sign in</button></p>
+          </div>
+
+          <div class="wizard-step" data-reset-step="2">
+            <form id="reset-code-form" novalidate>
+              <label class="admin-field" id="reset-code-field"><span>Code sent to <b id="reset-code-phone"></b></span>
+                <input id="f-code" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required placeholder="······">
+              </label>
+              <p id="reset-verified-note" hidden style="margin:0 0 10px; font-size:10.5px; font-weight:800; color:#7dd88f;">Your number is verified — continue to set a new password.</p>
+              <p id="reset-dev-note" hidden style="margin:0 0 10px; font-size:10.5px; font-weight:800; color:#f5c04a;">Dev mode: no SMS is sent — code shown above. Configure TEXTBEE_API_KEY for real delivery.</p>
+              <p id="reset-code-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full">
+                Verify code
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+              <button type="button" class="admin-btn admin-btn-ghost admin-btn-full" id="reset-resend" style="margin-top:8px" disabled>Resend code (60s)</button>
+              <button type="button" class="admin-btn admin-btn-ghost admin-btn-full" id="reset-back-1" style="margin-top:8px">Back · change my number</button>
+            </form>
+          </div>
+
+          <div class="wizard-step" data-reset-step="3">
+            <form id="reset-pass-form" novalidate>
+              <h3 class="wizard-title">Choose a new password</h3>
+              <p class="wizard-help">Use 8–12 characters with at least one letter and one number. Signing in on other devices will be ended.</p>
+              <label class="admin-field"><span>New password</span>
+                <div class="pass-wrap">
+                  <input id="f-pass" type="password" autocomplete="new-password" minlength="8" maxlength="12" required placeholder="8–12 characters">
+                  <button type="button" class="pass-toggle" data-pass-for="f-pass" aria-label="Show password"><svg><use href="#i-eye"/></svg></button>
+                </div>
+              </label>
+              <label class="admin-field"><span>Confirm new password</span>
+                <div class="pass-wrap">
+                  <input id="f-pass2" type="password" autocomplete="new-password" minlength="8" maxlength="12" required placeholder="Type it again">
+                  <button type="button" class="pass-toggle" data-pass-for="f-pass2" aria-label="Show password"><svg><use href="#i-eye"/></svg></button>
+                </div>
+              </label>
+              <p id="reset-pass-error" class="login-error" role="alert"></p>
+              <button type="submit" class="admin-btn admin-btn-primary admin-btn-full">
+                Update password
+                <svg><use href="#i-arrow"/></svg>
+              </button>
+              <button type="button" class="admin-btn admin-btn-ghost admin-btn-full" id="reset-back-2" style="margin-top:8px">Back · verify code again</button>
+            </form>
+          </div>
+
+          <div class="wizard-step" data-reset-step="4">
+            <div style="text-align:center; padding:18px 0 6px;">
+              <img src="assets/images/logokrave.jpg" alt="" style="width:52px; height:52px; margin-bottom:12px;">
+              <h2 style="margin:0 0 6px;">Password updated!</h2>
+              <p style="margin:0; font-size:12px; color:color-mix(in srgb, var(--white) 60%, transparent);">Sign in with your new password.</p>
+              <button type="button" class="admin-btn admin-btn-primary admin-btn-full" id="reset-done-login" style="margin-top:16px">Go to sign in<svg><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/algorithms.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var $ = function (s) { return document.querySelector(s); };
+
+      // Already signed in as an admin? The storefront preview is server-side
+      // (httpOnly cookie), so skip this customer login screen entirely.
+      window.MK_API.customerSession().then(function (session) {
+        if (session && session.role === "admin") location.replace("index.html");
+      }).catch(function () {});
+
+      // Registration no longer picks a barangay: the customer types one
+      // complete delivery address. The barangay list still drives checkout.
+
+      var panels = { login: $("#panel-login"), register: $("#panel-register"), reset: $("#panel-reset") };
+      function showPanel(name) {
+        Object.keys(panels).forEach(function (key) {
+          panels[key].classList.toggle("is-active", key === name);
+        });
+        $("#login-error").textContent = "";
+      }
+
+      // Hairline: a wizard screen. `names` are data-<prefix>-step attribute
+      // values; step 0 is the progress label only.
+      var regLabels = ["Verify your number", "Enter your code", "Set password", "Your name", "Delivery location"];
+      var resetLabels = ["Verify your number", "Enter your code", "New password"];
+      function showStep(prefix, labels, n, total) {
+        panels[prefix === "reg" ? "register" : "reset"].querySelectorAll(".wizard-step").forEach(function (step) {
+          var attr = Number(step.getAttribute("data-" + prefix + "-step"));
+          step.classList.toggle("is-active", attr === n);
+        });
+        $(prefix === "reg" ? "#register-progress" : "#reset-progress").innerHTML =
+          "<b>Step " + (n <= total ? n : total) + " of " + total + "</b> · " + (labels[n - 1] || "Done");
+        var track = document.getElementById(prefix === "reg" ? "register-track" : "reset-track");
+        if (track) {
+          Array.prototype.forEach.call(track.children, function (bar, index) {
+            bar.classList.toggle("is-done", index < n);
+          });
+        }
+      }
+
+      // password visibility toggles
+      document.querySelectorAll(".pass-toggle").forEach(function (toggle) {
+        toggle.addEventListener("click", function () {
+          var input = document.getElementById(toggle.getAttribute("data-pass-for"));
+          var showing = input.type === "text";
+          input.type = showing ? "password" : "text";
+          toggle.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+        });
+      });
+
+      function saveCustomer(data) {
+        try {
+          sessionStorage.removeItem("mk-reg-wizard");
+          sessionStorage.removeItem("mk-cooldown-reg");
+          sessionStorage.removeItem("mk-cooldown-reset");
+        } catch (e) {}
+        localStorage.setItem(window.MK_CONFIG.STORAGE.CUSTOMER_TOKEN, data.token);
+        localStorage.setItem(window.MK_CONFIG.STORAGE.PROFILE, JSON.stringify({
+          role: "customer",
+          id: data.profile.id,
+          firstName: data.profile.firstName,
+          lastName: data.profile.lastName,
+          phone: data.profile.phone,
+          barangay: data.profile.barangay,
+          address: data.profile.address || "",
+          landmark: data.profile.landmark || ""
+        }));
+      }
+
+      // Resend buttons: countdown lock until the server's cooldown ends. The
+      // end time survives a reload so the button never lies about being ready.
+      var cooldownTimers = {};
+      function runCooldown(button, endAt, key) {
+        if (cooldownTimers[key]) clearInterval(cooldownTimers[key]);
+        button.disabled = true;
+        function paint() {
+          var left = Math.ceil((endAt - Date.now()) / 1000);
+          if (left <= 0) {
+            clearInterval(cooldownTimers[key]);
+            delete cooldownTimers[key];
+            try { sessionStorage.removeItem(key); } catch (e) {}
+            button.disabled = false;
+            button.textContent = "Resend code";
+            return;
+          }
+          button.textContent = "Resend code (" + left + "s)";
+        }
+        paint();
+        cooldownTimers[key] = setInterval(paint, 1000);
+      }
+      function startCooldown(button, seconds, key) {
+        var endAt = Date.now() + (Number(seconds) || 60) * 1000;
+        try { sessionStorage.setItem(key, String(endAt)); } catch (e) {}
+        runCooldown(button, endAt, key);
+      }
+      function restoreCooldown(button, key) {
+        var endAt = 0;
+        try { endAt = Number(sessionStorage.getItem(key) || 0); } catch (e) {}
+        if (endAt > Date.now()) {
+          runCooldown(button, endAt, key);
+        } else {
+          try { sessionStorage.removeItem(key); } catch (e) {}
+          button.disabled = false;
+          button.textContent = "Resend code";
+        }
+      }
+
+      // Sign in ----------------------------------------------------------------
+      function refreshLoginButton() {
+        var ok = $("#c-phone").value.replace(/\D/g, "").length >= 7 && $("#c-pass").value.length > 0;
+        $("#login-button").disabled = !ok;
+      }
+      ["c-phone", "c-pass"].forEach(function (id) {
+        document.getElementById(id).addEventListener("input", refreshLoginButton);
+      });
+
+      $("#customer-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var errorEl = $("#login-error");
+        errorEl.textContent = "";
+        var phone = $("#c-phone").value.trim();
+        if (phone.replace(/\D/g, "").length < 7) {
+          errorEl.textContent = "Please enter a valid mobile number.";
+          return;
+        }
+        var button = $("#login-button");
+        var label = button.innerHTML;
+        button.disabled = true;
+        button.textContent = "Signing in…";
+        try {
+          var data = await window.MK_API.customerLogin(phone, $("#c-pass").value);
+          saveCustomer(data);
+          location.href = "index.html";
+        } catch (error) {
+          var msg = error.message || "Sign-in failed. Please try again.";
+          if (typeof error.attemptsLeft === "number") {
+            msg += " " + error.attemptsLeft + (error.attemptsLeft === 1 ? " attempt" : " attempts") + " left before a 5-minute lock.";
+          }
+          errorEl.textContent = msg;
+          button.innerHTML = label;
+          button.disabled = false;
+        }
+      });
+
+      $("#show-register").addEventListener("click", function () { showStep("reg", regLabels, 1, 5); showPanel("register"); });
+      $("#show-reset").addEventListener("click", function () { showStep("reset", resetLabels, 1, 3); showPanel("reset"); });
+      ["show-login-wiz", "show-login-reg", "show-login-reset", "reset-done-login"].forEach(function (id) {
+        document.getElementById(id).addEventListener("click", function () {
+          // Deliberate sign-in: forget any in-flight registration.
+          try { sessionStorage.removeItem("mk-reg-wizard"); } catch {}
+          showPanel("login");
+        });
+      });
+      $("#reg-change-number").addEventListener("click", function () {
+        // Editing the number invalidates the proof: a fresh OTP is required.
+        reg.verified = false;
+        try { sessionStorage.removeItem("mk-reg-wizard"); } catch {}
+        showStep("reg", regLabels, 1, 5);
+      });
+
+      // Registration wizard ----------------------------------------------------
+      var reg = { phone: "", stepToken: "", firstName: "", lastName: "", password: "", verified: false };
+
+      // Returning to the code screen with a verified number must NOT re-run the
+      // (single-use) verification: hide the code fields and continue forward.
+      function showRegStep2(verified) {
+        reg.verified = verified;
+        $("#reg-code-field").hidden = verified;
+        $("#reg-verified-note").hidden = !verified;
+        $("#reg-resend").hidden = verified;
+        var submit = document.querySelector("#reg-code-form button[type=submit]");
+        if (submit) submit.innerHTML = verified ? "Continue <svg><use href=\"#i-arrow\"/></svg>" : "Verify code <svg><use href=\"#i-arrow\"/></svg>";
+        $("#reg-code-error").textContent = "";
+        showStep("reg", regLabels, 2, 5);
+      }
+
+      function regBack(step) {
+        if (step === 2) { showRegStep2(true); return; }
+        showStep("reg", regLabels, step, 5);
+      }
+      $("#reg-back-2").addEventListener("click", function () { regBack(2); });
+      $("#reg-back-3").addEventListener("click", function () { regBack(3); });
+      $("#reg-back-4").addEventListener("click", function () { regBack(4); });
+
+      // A reload must never dump the customer back on sign-in mid-OTP:
+      // resume at the code step, or — if the code was already verified —
+      // straight at the password step with the server's step token.
+      (function () {
+        var saved = "";
+        try { saved = sessionStorage.getItem("mk-reg-wizard") || ""; } catch {}
+        var state = null;
+        try { state = JSON.parse(saved); } catch {}
+        var phone = state && state.phone ? normalizePhone(state.phone) : "";
+        if (!phone) return;
+        reg.phone = phone;
+        showPanel("register");
+        if (state.stepToken) {
+          reg.stepToken = state.stepToken;
+          reg.verified = true;
+          showStep("reg", regLabels, 3, 5);
+          return;
+        }
+        $("#reg-code-phone").textContent = phone;
+        showRegStep2(false);
+        restoreCooldown($("#reg-resend"), "mk-cooldown-reg");
+        var codeError = $("#reg-code-error");
+        codeError.classList.add("is-success");
+        codeError.textContent = "We kept your place. Enter the code sent to " + phone + ".";
+      })();
+
+      // Phone fields accept only Philippine mobile digits; the keypad spam
+      // can never overflow the field or push its text out of the box.
+      ["c-phone", "r-phone", "f-phone"].forEach(function (id) {
+        var input = document.getElementById(id);
+        if (!input) return;
+        input.addEventListener("input", function () {
+          var digits = window.MKAlgorithms.cleanPhoneDigits(input.value);
+          if (input.value !== digits) { input.value = digits; }
+        });
+      });
+
+
+      function normalizePhone(value) {
+        var digits = value.replace(/\D/g, "");
+        if (digits.length === 12 && digits.indexOf("63") === 0) return "+" + digits;
+        if (digits.length === 10 && digits.indexOf("9") === 0) return "+63" + digits;
+        if (digits.length === 11 && digits.indexOf("09") === 0) return "+63" + digits.slice(1);
+        return "";
+      }
+
+      $("#reg-phone-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var errorEl = $("#reg-error");
+        errorEl.textContent = "";
+        reg.verified = false;
+        var phone = normalizePhone($("#r-phone").value);
+        if (!phone) {
+          errorEl.textContent = "Please enter a valid Philippine mobile number (09…).";
+          return;
+        }
+        var button = $("#reg-send");
+        button.disabled = true;
+        var buttonHtml = button.innerHTML;
+        button.innerHTML = "Sending…";
+        try {
+          var data = await window.MK_API.customerOtpRequest(phone, "register");
+          reg.phone = phone;
+          // Survive a tab reload (app switch, SMS notification on phones):
+          // reopening the page resumes the wizard at the OTP step.
+          try { sessionStorage.setItem("mk-reg-wizard", JSON.stringify({ phone: phone })); } catch {}
+          $("#reg-code-phone").textContent = phone;
+          $("#r-code").value = "";
+          showRegStep2(false);
+          startCooldown($("#reg-resend"), data.resendAfter, "mk-cooldown-reg");
+          var codeError = $("#reg-code-error");
+          codeError.classList.add("is-success");
+          codeError.textContent = "Code sent to " + phone + ". Enter it below.";
+          // Dev console channel sends no real SMS: show the code so a human
+          // can finish the flow (never shown with a real provider).
+          if (data.devCode) {
+            setTimeout(function () {
+              $("#reg-code-error").style.color = "";
+              $("#r-code").value = data.devCode;
+              var note = $("#reg-dev-note");
+              if (note) { note.textContent = "Dev mode: no SMS is sent — code shown above. Configure TEXTBEE_API_KEY for real delivery."; note.hidden = false; }
+            }, 0);
+          }
+        } catch (error) {
+          // Cooldown rejections carry retryAfter — turn them into a countdown.
+          errorEl.textContent = error.retryAfter
+            ? "Please wait " + error.retryAfter + "s, then tap Send my code again."
+            : (error.message || "Could not send a code right now.");
+        } finally {
+          button.innerHTML = buttonHtml;
+          button.disabled = false;
+        }
+      });
+
+      $("#reg-resend").addEventListener("click", function () {
+        var button = $("#reg-resend");
+        var errorEl = $("#reg-code-error");
+        errorEl.classList.remove("is-success");
+        errorEl.textContent = "";
+        button.disabled = true;
+        button.textContent = "Sending new code…";
+        window.MK_API.customerOtpRequest(reg.phone, "register")
+          .then(function (data) {
+            // Success copy only after the SMS provider accepted the request.
+            $("#r-code").value = data.devCode || "";
+            reg.verified = false;
+            startCooldown(button, data.resendAfter, "mk-cooldown-reg");
+            errorEl.classList.add("is-success");
+            errorEl.textContent = "New code sent to " + reg.phone + ".";
+            if (data.devCode) {
+              var note = $("#reg-dev-note");
+              if (note) { note.textContent = "Dev mode: no SMS is sent — code shown above."; note.hidden = false; }
+            }
+          })
+          .catch(function (error) {
+            // A server cooldown means the code is already on its way; show the
+            // real remaining time instead of letting the customer spam again.
+            if (error.retryAfter) {
+              startCooldown(button, error.retryAfter, "mk-cooldown-reg");
+              errorEl.textContent = "Please wait " + error.retryAfter + "s before requesting another code.";
+            } else {
+              button.disabled = false;
+              button.textContent = "Resend code";
+              errorEl.textContent = error.message || "Could not resend.";
+            }
+          });
+      });
+
+      $("#reg-code-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var errorEl = $("#reg-code-error");
+        errorEl.classList.remove("is-success");
+        errorEl.textContent = "";
+        // Already-verified numbers go forward without touching the single-use code.
+        if (reg.verified) { showStep("reg", regLabels, 3, 5); return; }
+        var code = $("#r-code").value.replace(/\D/g, "");
+        if (code.length !== 6) {
+          errorEl.textContent = "Enter the 6-digit code.";
+          return;
+        }
+        var button = event.target.querySelector("button[type=submit]");
+        var label = button.innerHTML;
+        button.disabled = true;
+        button.textContent = "Verifying…";
+        try {
+          var data = await window.MK_API.customerOtpVerify(reg.phone, code);
+          reg.stepToken = data.stepToken;
+          reg.verified = true;
+          try { sessionStorage.removeItem("mk-cooldown-reg"); } catch (e) {}
+          // A reload after verification must resume at the password step,
+          // not drag the customer back to a spent code.
+          try { sessionStorage.setItem("mk-reg-wizard", JSON.stringify({ phone: reg.phone, stepToken: data.stepToken })); } catch {}
+          showStep("reg", regLabels, 3, 5);
+        } catch (error) {
+          errorEl.textContent = error.message || "That code is not correct.";
+          button.innerHTML = label;
+          button.disabled = false;
+        }
+      });
+
+      // Step 3: password (policy + match), then names on step 4.
+      var passMeter = $(".pass-meter");
+      function passStrength(value) {
+        var classes = [/[a-z]/, /[A-Z]/, /\d/, /[^A-Za-z0-9]/].filter(function (rx) { return rx.test(value); }).length;
+        if (value.length >= 8 && classes >= 3) return ["strong", "Strong"];
+        if (value.length >= 8 && classes >= 2) return ["medium", "Medium"];
+        return ["weak", "Weak"];
+      }
+      function renderPassStrength() {
+        var s = passStrength($("#r-pass").value);
+        passMeter.setAttribute("data-strength", s[0]);
+        $("#reg-pass-strength").textContent = $("#r-pass").value ? s[1] : "";
+      }
+      $("#r-pass").addEventListener("input", renderPassStrength);
+
+      // A suggestion is only ever filled by an explicit tap — the wizard
+      // never generates or saves a password on its own.
+      $("#reg-suggest").addEventListener("click", function () {
+        var sets = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%&*";
+        var picks = ["abcdefghjkmnpqrstuvwxyz", "ABCDEFGHJKLMNPQRSTUVWXYZ", "23456789", "!@#$%&*"].map(function (set) {
+          return set[crypto.getRandomValues(new Uint32Array(1))[0] % set.length];
+        });
+        while (picks.length < 12) {
+          picks.push(sets[crypto.getRandomValues(new Uint32Array(1))[0] % sets.length]);
+        }
+        // Fisher–Yates so the guaranteed-class chars are not always first.
+        for (var i = picks.length - 1; i > 0; i--) {
+          var j = crypto.getRandomValues(new Uint32Array(1))[0] % (i + 1);
+          var tmp = picks[i]; picks[i] = picks[j]; picks[j] = tmp;
+        }
+        var password = picks.join("");
+        $("#r-pass").value = password;
+        $("#r-pass2").value = password;
+        renderPassStrength();
+      });
+
+      $("#reg-pass-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var errorEl = $("#reg-pass-error");
+        errorEl.textContent = "";
+        var password = $("#r-pass").value;
+        if (password.length < 8 || password.length > 12 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+          errorEl.textContent = "Use 8–12 characters with at least a letter and a number.";
+          return;
+        }
+        if (password !== $("#r-pass2").value) {
+          errorEl.textContent = "Those passwords do not match.";
+          return;
+        }
+        reg.password = password;
+        showStep("reg", regLabels, 4, 5);
+      });
+
+      $("#reg-name-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var errorEl = $("#reg-name-error");
+        errorEl.textContent = "";
+        if (!$("#r-first").value.trim() || !$("#r-last").value.trim()) {
+          errorEl.textContent = "Please add your first and last name.";
+          return;
+        }
+        reg.firstName = $("#r-first").value.trim();
+        reg.lastName = $("#r-last").value.trim();
+        showStep("reg", regLabels, 5, 5);
+      });
+
+      $("#register-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var errorEl = $("#register-error");
+        errorEl.textContent = "";
+        var address = $("#r-address").value.trim();
+        if (address.length < 10) {
+          errorEl.textContent = "Enter your complete delivery address (block, lot, phase, street, barangay).";
+          return;
+        }
+        var button = $("#register-submit");
+        var label = button.innerHTML;
+        button.disabled = true;
+        button.textContent = "Creating your account…";
+        try {
+          var data = await window.MK_API.customerRegister({
+            firstName: reg.firstName,
+            lastName: reg.lastName,
+            password: reg.password,
+            confirmPassword: reg.password,
+            address: address,
+            landmark: $("#r-landmark").value.trim()
+          }, reg.stepToken);
+          saveCustomer(data);
+          showStep("reg", regLabels, 6, 5);
+          setTimeout(function () { location.href = "index.html"; }, 1800);
+        } catch (error) {
+          if (error.status === 403) {
+            // The verification proof expired: start over at the number step.
+            reg.verified = false;
+            reg.stepToken = "";
+            try { sessionStorage.removeItem("mk-reg-wizard"); } catch (e) {}
+            showStep("reg", regLabels, 1, 5);
+          }
+          errorEl.textContent = error.message || "Could not create your account. Please try again.";
+          button.innerHTML = label;
+          button.disabled = false;
+        }
+      });
+
+      // Forgot password --------------------------------------------------------
+      var reset = { phone: "", stepToken: "", verified: false };
+
+      function setResetCodeVerified(verified) {
+        reset.verified = verified;
+        $("#reset-code-field").hidden = verified;
+        $("#reset-verified-note").hidden = !verified;
+        $("#reset-resend").hidden = verified;
+        var submit = document.querySelector("#reset-code-form button[type=submit]");
+        if (submit) submit.innerHTML = verified ? "Continue <svg><use href=\"#i-arrow\"/></svg>" : "Verify code <svg><use href=\"#i-arrow\"/></svg>";
+      }
+
+      $("#reset-phone-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var errorEl = $("#reset-error");
+        errorEl.textContent = "";
+        var phone = normalizePhone($("#f-phone").value);
+        if (!phone) {
+          errorEl.textContent = "Please enter a valid Philippine mobile number (09…).";
+          return;
+        }
+        var button = $("#reset-send");
+        var label = button.innerHTML;
+        button.disabled = true;
+        button.textContent = "Sending…";
+        try {
+          // Unknown numbers get the same response shape as existing ones, so
+          // this can't be used to probe who has an account.
+          var data = await window.MK_API.customerOtpRequest(phone, "reset");
+          reset.phone = phone;
+          reset.verified = false;
+          reset.stepToken = "";
+          $("#reset-code-phone").textContent = phone;
+          $("#f-code").value = "";
+          setResetCodeVerified(false);
+          showStep("reset", resetLabels, 2, 3);
+          startCooldown($("#reset-resend"), data.resendAfter, "mk-cooldown-reset");
+          var codeError = $("#reset-code-error");
+          codeError.classList.add("is-success");
+          codeError.textContent = "Code sent to " + phone + ". Enter it below.";
+          if (data.devCode) {
+            $("#f-code").value = data.devCode;
+            var note = $("#reset-dev-note");
+            if (note) { note.textContent = "Dev mode: no SMS is sent — code shown above."; note.hidden = false; }
+          }
+        } catch (error) {
+          errorEl.textContent = error.retryAfter
+            ? "Please wait " + error.retryAfter + "s, then send again."
+            : (error.message || "Could not send a code right now.");
+        } finally {
+          button.innerHTML = label;
+          button.disabled = false;
+        }
+      });
+
+      $("#reset-resend").addEventListener("click", function () {
+        var button = $("#reset-resend");
+        var errorEl = $("#reset-code-error");
+        errorEl.classList.remove("is-success");
+        errorEl.textContent = "";
+        button.disabled = true;
+        button.textContent = "Sending new code…";
+        window.MK_API.customerOtpRequest(reset.phone, "reset")
+          .then(function (data) {
+            // Success copy only after the SMS provider accepted the request.
+            $("#f-code").value = data.devCode || "";
+            reset.verified = false;
+            reset.stepToken = "";
+            setResetCodeVerified(false);
+            startCooldown(button, data.resendAfter, "mk-cooldown-reset");
+            errorEl.classList.add("is-success");
+            errorEl.textContent = "New code sent to " + reset.phone + ".";
+            if (data.devCode) {
+              var note = $("#reset-dev-note");
+              if (note) { note.textContent = "Dev mode: no SMS is sent — code shown above."; note.hidden = false; }
+            }
+          })
+          .catch(function (error) {
+            if (error.retryAfter) {
+              startCooldown(button, error.retryAfter, "mk-cooldown-reset");
+              errorEl.textContent = "Please wait " + error.retryAfter + "s before requesting another code.";
+            } else {
+              button.disabled = false;
+              button.textContent = "Resend code";
+              errorEl.textContent = error.message || "Could not resend.";
+            }
+          });
+      });
+
+      // Back out of the code step without losing the number the customer typed.
+      $("#reset-back-1").addEventListener("click", function () {
+        $("#reset-code-error").classList.remove("is-success");
+        $("#reset-code-error").textContent = "";
+        showStep("reset", resetLabels, 1, 3);
+      });
+
+      // First reset step returns all the way out to sign in.
+      $("#reset-back-login").addEventListener("click", function () {
+        try { sessionStorage.removeItem("mk-cooldown-reset"); } catch (e) {}
+        $("#reset-error").textContent = "";
+        showPanel("login");
+      });
+
+      // Back from the new-password step: a verified code stays verified, so
+      // the code step's submit walks straight back here instead of asking again.
+      $("#reset-back-2").addEventListener("click", function () {
+        $("#reset-pass-error").textContent = "";
+        setResetCodeVerified(reset.verified);
+        showStep("reset", resetLabels, 2, 3);
+      });
+
+      $("#reset-code-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var errorEl = $("#reset-code-error");
+        errorEl.classList.remove("is-success");
+        errorEl.textContent = "";
+        if (reset.verified) { showStep("reset", resetLabels, 3, 3); return; }
+        var code = $("#f-code").value.replace(/\D/g, "");
+        if (code.length !== 6) {
+          errorEl.textContent = "Enter the 6-digit code.";
+          return;
+        }
+        var button = event.target.querySelector("button[type=submit]");
+        var label = button.innerHTML;
+        button.disabled = true;
+        button.textContent = "Verifying…";
+        try {
+          var data = await window.MK_API.customerOtpVerify(reset.phone, code);
+          reset.stepToken = data.stepToken;
+          if (data.step !== "reset") {
+            errorEl.textContent = "That number has no account yet. Create one instead.";
+            button.innerHTML = label;
+            button.disabled = false;
+            return;
+          }
+          reset.verified = true;
+          try { sessionStorage.removeItem("mk-cooldown-reset"); } catch (e) {}
+          setResetCodeVerified(true);
+          button.innerHTML = "Continue <svg><use href=\"#i-arrow\"/></svg>";
+          button.disabled = false;
+          showStep("reset", resetLabels, 3, 3);
+        } catch (error) {
+          errorEl.textContent = error.message || "That code is not correct.";
+          button.innerHTML = label;
+          button.disabled = false;
+        }
+      });
+
+      $("#reset-pass-form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var errorEl = $("#reset-pass-error");
+        errorEl.textContent = "";
+        var password = $("#f-pass").value;
+        if (password.length < 8 || password.length > 12 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+          errorEl.textContent = "Use 8–12 characters with at least a letter and a number.";
+          return;
+        }
+        if (password !== $("#f-pass2").value) {
+          errorEl.textContent = "Those passwords do not match.";
+          return;
+        }
+        var button = event.target.querySelector("button[type=submit]");
+        var label = button.innerHTML;
+        button.disabled = true;
+        button.textContent = "Updating password…";
+        try {
+          await window.MK_API.customerPasswordReset({
+            password: password,
+            confirmPassword: password
+          }, reset.stepToken);
+          try { sessionStorage.removeItem("mk-cooldown-reset"); } catch (e) {}
+          showStep("reset", resetLabels, 4, 3);
+        } catch (error) {
+          if (error.status === 403) {
+            setResetCodeVerified(false);
+            showStep("reset", resetLabels, 1, 3);
+          }
+          errorEl.textContent = error.message || "Could not update your password.";
+          button.innerHTML = label;
+          button.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

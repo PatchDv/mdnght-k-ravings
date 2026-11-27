@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a213d">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Staff Sign In | MDNGHT K-RAVINGS</title>
+  <script>
+    // Styles and scripts live in /frontend. Served by the app at :3000 -> site
+    // root; opened straight from disk (or a static mirror) -> this page sits in
+    // backend/views, so walk up to frontend/. <base> only affects relative
+    // URLs, so the tags below stay relative on purpose.
+    document.write('<base href="' + (location.protocol === "file:" || (location.port && location.port !== "3000") ? "../../frontend/" : "/") + '">');
+  </script>
+  <link rel="icon" type="image/jpeg" href="assets/images/logokrave.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5 18.5 12 13 17.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <section class="admin-login">
+    <div class="login-art">
+      <div class="login-art-image"></div>
+      <div class="login-art-overlay"></div>
+      <div class="login-brand">
+        <img src="assets/images/logokrave.jpg" alt="">
+        <div><strong>MDNGHT</strong><span>K-RAVINGS</span></div>
+      </div>
+      <div class="login-copy">
+        <p class="eyebrow">KITCHEN CREW ONLY</p>
+        <h1>Good food.<br>Good numbers.<br><span>Good night.</span></h1>
+        <p>One quiet place for the menu, the orders, and the cravings that keep Madapdap awake.</p>
+        <div class="login-points">
+          <div>
+            <span>01</span>
+            <p><strong>Every order in one lane</strong><small>Quote the fee, move the status, keep the customer looped in.</small></p>
+          </div>
+          <div>
+            <span>02</span>
+            <p><strong>Menu changes go live</strong><small>Hide a sold-out dish or add a late-night special instantly.</small></p>
+          </div>
+          <div>
+            <span>03</span>
+            <p><strong>Numbers that add up</strong><small>Revenue, best sellers and profit per night, in one place.</small></p>
+          </div>
+        </div>
+      </div>
+      <p class="login-footer">Madapdap, Mabalacat · Pampanga</p>
+    </div>
+
+    <div class="login-form-side">
+      <div class="login-form-wrap">
+        <span class="login-badge"><svg><use href="#i-lock"/></svg> SECURE TEAM ACCESS</span>
+        <h2>Welcome back.</h2>
+        <p class="login-sub">Sign in to open the kitchen board.</p>
+        <form id="login-form" novalidate>
+          <label class="admin-field">
+            <span>Admin name</span>
+            <input id="login-user" name="username" type="text" autocomplete="username" placeholder="admin" required>
+          </label>
+          <label class="admin-field">
+            <span>Password</span>
+            <div class="pass-wrap">
+              <input id="login-pass" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
+              <button type="button" class="pass-toggle" data-pass-for="login-pass" aria-label="Show password"><svg><use href="#i-eye"/></svg></button>
+            </div>
+          </label>
+          <p id="login-error" class="login-error" role="alert"></p>
+          <button type="submit" class="admin-btn admin-btn-primary admin-btn-full" id="login-button">
+            Open the kitchen board
+            <svg><use href="#i-arrow"/></svg>
+          </button>
+        </form>
+        <div class="login-form-foot">
+          <a class="back-store" href="index.html"><svg><use href="#i-arrow"/></svg> Back to the storefront</a>
+          <span>Private session &middot; httpOnly</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var form = document.getElementById("login-form");
+      var user = document.getElementById("login-user");
+      var pass = document.getElementById("login-pass");
+      var errorEl = document.getElementById("login-error");
+      var button = document.getElementById("login-button");
+      // Sign-in needs the kitchen server's cookies, which only exist when this
+      // page is served by the app itself. A file copy is a design preview.
+      var served = location.protocol === "http:" || location.protocol === "https:";
+      var onApp = served && (!location.port || location.port === "3000" || location.port === "80" || location.port === "443");
+      // The real staff door on the app. Update if ADMIN_PATH ever changes.
+      var realDoor = "http://" + (location.hostname || "localhost") + ":3000/staff-portal-x7k2";
+
+      if (!onApp) {
+        var wrap = document.querySelector(".login-form-wrap");
+        var note = document.createElement("p");
+        note.className = "login-hint";
+        note.innerHTML = "You are viewing a file copy — sign-in happens on the kitchen server.<br>" +
+          '<a href="' + realDoor + '">Open the real staff door</a>';
+        wrap.insertBefore(note, wrap.firstChild);
+      }
+
+      document.querySelectorAll(".pass-toggle[data-pass-for]").forEach(function (toggle) {
+        toggle.addEventListener("click", function () {
+          var input = document.getElementById(toggle.dataset.passFor);
+          var show = input.type === "password";
+          input.type = show ? "text" : "password";
+          toggle.setAttribute("aria-label", show ? "Hide password" : "Show password");
+          toggle.classList.toggle("is-on", show);
+        });
+      });
+
+      // Lockout is visible, not silent: while the IP cools down the button
+      // counts down and stays disabled, so "can't login" always comes with a
+      // reason and a time.
+      var cooldownTimer = null;
+      function fmt(seconds) {
+        var s = Math.max(0, Math.round(seconds));
+        return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+      }
+      function startCooldown(seconds) {
+        var left = Math.max(1, Math.round(seconds || 300));
+        clearInterval(cooldownTimer);
+        button.disabled = true;
+        var tick = function () {
+          button.textContent = "Locked \u2014 try again in " + fmt(left);
+          errorEl.textContent = "Too many wrong attempts. The door reopens in " + fmt(left) + ".";
+        };
+        tick();
+        cooldownTimer = setInterval(function () {
+          left -= 1;
+          if (left <= 0) {
+            clearInterval(cooldownTimer);
+            button.disabled = false;
+            button.innerHTML = 'Open the kitchen board <svg><use href="#i-arrow"/></svg>';
+            errorEl.textContent = "";
+            return;
+          }
+          tick();
+        }, 1000);
+      }
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        if (button.disabled) return; // cooldown active or attempt in flight (Enter key bypasses the button)
+        // Outside the app there is no way to hold the session cookie — sending
+        // the browser to the real door is the only thing that can work.
+        if (!onApp) {
+          window.location.href = realDoor;
+          return;
+        }
+        var username = user.value.trim();
+        var password = pass.value;
+        if (!username || !password) {
+          errorEl.textContent = "Enter your username and password.";
+          return;
+        }
+        button.disabled = true;
+        button.textContent = "Signing in...";
+        errorEl.textContent = "";
+        try {
+          await window.MK_API.adminLogin(username, password);
+          window.location.replace(window.location.pathname.replace(/\/+$/, "") + "/board");
+        } catch (error) {
+          if (error.status === 429) {
+            startCooldown(error.retryAfter);
+          } else if (error.status) {
+            var left = typeof error.attemptsLeft === "number" ? error.attemptsLeft : null;
+            errorEl.textContent = (error.message || "Could not sign you in.")
+              + (left !== null ? " " + left + (left === 1 ? " attempt" : " attempts") + " left before a 5-minute lock." : "");
+            button.disabled = false;
+            button.innerHTML = 'Open the kitchen board <svg><use href="#i-arrow"/></svg>';
+          } else {
+            errorEl.textContent = "Could not reach the kitchen server. Start it with npm start, then open http://" + (location.hostname || "localhost") + ":3000/staff-portal-x7k2.";
+            button.disabled = false;
+            button.innerHTML = 'Open the kitchen board <svg><use href="#i-arrow"/></svg>';
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

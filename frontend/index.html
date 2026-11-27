@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a213d">
+  <meta name="description" content="MDNGHT K-RAVINGS — Korean fried chicken, trays, bilao, and silog meals delivered around Madapdap, Mabalacat.">
+  <title>MDNGHT K-RAVINGS | Korean cravings, delivered</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logokrave.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="welcome-open">
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-pin" viewBox="0 0 24 24">
+      <path d="M20 10.1c0 5.4-8 11-8 11s-8-5.6-8-11a8 8 0 1 1 16 0Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.9"/>
+      <path d="m16 16 4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24">
+      <path d="M3 4h2.1l2 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20.2 7H6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="9" cy="20" r="1.4" fill="currentColor"/>
+      <circle cx="17.2" cy="20" r="1.4" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="3.7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M4.8 20a7.2 7.2 0 0 1 14.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24">
+      <path d="m7 9.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-close" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24">
+      <path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24">
+      <rect x="8.3" y="3.2" width="7.4" height="11.6" rx="3.7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-scooter" viewBox="0 0 24 24">
+      <circle cx="6" cy="18" r="2.3" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <circle cx="18" cy="18" r="2.3" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <path d="M8.3 18h6.3l2-8h2M4 6h4l3.7 10M14.5 10h-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 24 24">
+      <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 16.9l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24">
+      <path d="M12 2.8c.7 4.8 3.7 7.8 8.5 8.5-4.8.7-7.8 3.7-8.5 8.5-.7-4.8-3.7-7.8-8.5-8.5 4.8-.7 7.8-3.7 8.5-8.5Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <path d="M5 7h14M9 7V4.5h6V7M7.5 7l.8 13h7.4l.8-13M10.2 10.5v6M13.8 10.5v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24">
+      <path d="M5.5 8.5h13l-1 12h-11l-1-12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="m5 12.5 4.2 4.2L19 6.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-home" viewBox="0 0 24 24">
+      <path d="m3.8 11 8.2-7 8.2 7v9h-5.7v-5.8H9.5V20H3.8v-9Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24">
+      <rect x="3.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <rect x="13.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <rect x="3.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <rect x="13.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    </symbol>
+    <symbol id="i-tray" viewBox="0 0 24 24">
+      <path d="M3 15.5h18l-2 4H5l-2-4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+      <path d="M6 15.5c.6-4.6 2.6-7 6-7s5.4 2.4 6 7M9 5.5c0 1 .5 1.5 1.3 2M14 4c0 1.2-.5 1.8-1.5 2.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-rice" viewBox="0 0 24 24">
+      <path d="M4 12h16c0 4.4-3.6 8-8 8s-8-3.6-8-8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+      <path d="M6.5 9.5h11M8 7h8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24">
+      <path d="M7 4.5h3l1.4 4-2 1.4a13 13 0 0 0 4.7 4.7l1.4-2 4 1.4v3c0 1.3-1.1 2.3-2.4 2.2C10 18.6 5.4 14 4.8 6.9 4.7 5.6 5.7 4.5 7 4.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24">
+      <rect x="4.5" y="10" width="15" height="10.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <path d="M8.2 10V7.5a3.8 3.8 0 0 1 7.6 0V10" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    </symbol>
+    <symbol id="i-admin" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3a2 2 0 1 1 4 0v.1A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.16.38.4.72.72.98.3.26.7.4 1.1.42H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5.6Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24">
+      <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-up" viewBox="0 0 24 24">
+      <path d="M12 20V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24">
+      <path d="M4 17l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M15 7h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <!-- FIRST VISIT / PROFILE EDIT -->
+  <section id="welcome-screen" class="welcome-screen" aria-labelledby="welcome-title">
+    <div class="welcome-visual">
+      <div class="welcome-visual-image"></div>
+      <div class="welcome-visual-overlay"></div>
+      <div class="welcome-brand">
+        <img src="assets/images/logokrave.jpg" alt="MDNGHT K-RAVINGS logo">
+        <div><strong>MDNGHT</strong><span>K-RAVINGS</span></div>
+      </div>
+      <div class="welcome-visual-copy">
+        <p class="eyebrow light">MADAPDAP'S LATE-NIGHT KITCHEN</p>
+        <h1>Good food.<br>After dark.</h1>
+        <p>Korean fried chicken, cheesy noodles, and Filipino silog — delivered hot around Mabalacat.</p>
+        <div class="welcome-mini-cards">
+          <div><span class="mini-icon"><svg><use href="#i-clock"/></svg></span><strong>30–45 min</strong><small>fresh to your door</small></div>
+          <div><span class="mini-icon"><svg><use href="#i-scooter"/></svg></span><strong>Madapdap</strong><small>local delivery</small></div>
+        </div>
+      </div>
+      <div class="welcome-visual-footer">Pampanga · Philippines</div>
+    </div>
+
+    <div class="welcome-form-side">
+      <button type="button" id="welcome-close" class="welcome-close" aria-label="Close profile editor">
+        <svg><use href="#i-close"/></svg>
+      </button>
+      <form id="welcome-form" class="welcome-form" novalidate>
+        <div class="welcome-form-top">
+          <span class="form-kicker"><svg><use href="#i-spark"/></svg> CRAVINGS START HERE</span>
+          <h2 id="welcome-title">Let’s get your cravings ready.</h2>
+          <p>Tell us who’s hungry and where to send the good stuff.</p>
+        </div>
+
+        <div class="field-row">
+          <label class="field">
+            <span>First name</span>
+            <input id="first-name" name="firstName" type="text" autocomplete="given-name" placeholder="Juan" maxlength="60" required>
+          </label>
+          <label class="field">
+            <span>Last name</span>
+            <input id="last-name" name="lastName" type="text" autocomplete="family-name" placeholder="Dela Cruz" maxlength="60" required>
+          </label>
+        </div>
+
+        <div class="location-card">
+          <div class="location-card-head">
+            <span class="location-pin"><svg><use href="#i-pin"/></svg></span>
+            <div>
+              <strong>Delivery location</strong>
+              <small>We deliver around Madapdap and nearby barangays.</small>
+            </div>
+          </div>
+
+          <div class="location-breadcrumb" aria-label="Fixed delivery area">
+            <span><i>PH</i> Philippines</span>
+            <b>/</b>
+            <span>Pampanga</span>
+            <b>/</b>
+            <span>Mabalacat</span>
+            <b>/</b>
+            <span class="current">Madapdap</span>
+          </div>
+
+          <label class="field barangay-field">
+            <span>Choose your barangay</span>
+            <div class="select-wrap">
+              <select id="barangay-select" name="barangay" required>
+                <option value="">Select your barangay</option>
+              </select>
+              <svg><use href="#i-chevron"/></svg>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>Complete delivery address</span>
+            <input id="welcome-address" name="address" type="text" autocomplete="street-address" placeholder="Blk, Lot, Phase, Street, Madapdap Resettlement Center, Dapdap, Mabalacat City, Pampanga" maxlength="240">
+          </label>
+
+          <label class="field">
+            <span>Nearby place or landmark <small style="color:var(--muted-soft);font-weight:600">(optional)</small></span>
+            <input id="welcome-landmark" name="landmark" type="text" placeholder="Near the covered court, blue gate" maxlength="120">
+          </label>
+        </div>
+
+        <p id="welcome-error" class="form-error" role="alert"></p>
+
+        <button type="submit" class="btn btn-primary btn-large btn-full">
+          Start my cravings
+          <svg><use href="#i-arrow"/></svg>
+        </button>
+
+        <div class="secure-note">
+          <svg><use href="#i-lock"/></svg>
+          <span>Saved to your account so checkout is one tap.</span>
+        </div>
+      </form>
+      <div class="welcome-trust-row">
+        <span>Freshly cooked</span>
+        <span>Local delivery</span>
+        <span>Made in Mabalacat</span>
+      </div>
+    </div>
+  </section>
+
+  <div id="app" class="app-shell">
+    <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="utility-bar">
+        <div class="container utility-inner">
+          <p><span class="pulse-dot"></span> Delivery fee depends on your location and is set by the admin per order. Free delivery for orders of ₱400 or more.</p>
+          <p class="utility-right"><span>Madapdap, Mabalacat</span></p>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <div class="container nav-inner">
+          <a href="#home" class="brand" aria-label="MDNGHT K-RAVINGS home">
+            <img src="assets/images/logokrave.jpg" alt="">
+            <span class="brand-type"><strong>MDNGHT</strong><small>K-RAVINGS</small></span>
+          </a>
+
+          <form id="header-search-form" class="header-search" role="search" autocomplete="off">
+            <svg class="header-search-icon" aria-hidden="true"><use href="#i-search"/></svg>
+            <input id="menu-search" type="search" autocomplete="off" placeholder="Search wings, kimbap, silog…" aria-label="Search the menu" aria-expanded="false" aria-controls="search-suggestions" role="combobox">
+            <button type="button" id="search-clear" class="search-clear" aria-label="Clear search" hidden>
+              <svg><use href="#i-close"/></svg>
+            </button>
+            <kbd class="search-kbd" aria-hidden="true">/</kbd>
+            <div id="search-suggestions" class="search-suggestions" role="listbox" hidden></div>
+          </form>
+
+          <div class="header-actions">
+            <button type="button" id="cart-button" class="cart-button" aria-label="Open your order">
+              <svg><use href="#i-bag"/></svg>
+              <span class="cart-label">My order</span>
+              <span id="cart-badge" class="cart-badge" hidden>0</span>
+            </button>
+            <span id="admin-shop-badge" class="admin-shop-badge" hidden>Admin</span>
+            <button type="button" id="profile-button" class="avatar-button" aria-label="Open your profile">
+              <span id="profile-initials">MK</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Menu controls live in the top bar: section pills + sort. -->
+        <div class="container menu-bar">
+          <div id="filter-pills" class="filter-pills" role="group" aria-label="Filter by menu section">
+            <button type="button" class="filter-pill is-active" data-filter="all">All cravings</button>
+            <button type="button" class="filter-pill" data-filter="korean-cravings">Korean cravings</button>
+            <button type="button" class="filter-pill" data-filter="trays-bilao">Trays &amp; bilao</button>
+            <button type="button" class="filter-pill" data-filter="silog-meals">Silog meals</button>
+          </div>
+          <div class="control-actions">
+            <p id="result-summary" class="result-summary" aria-live="polite"></p>
+            <div class="sort-box">
+              <span>Sort</span>
+              <div class="select-wrap">
+                <select id="sort-select" aria-label="Sort menu">
+                  <option value="recommended">Recommended</option>
+                  <option value="price-asc">Price: low to high</option>
+                  <option value="price-desc">Price: high to low</option>
+                  <option value="name-asc">Name: A–Z</option>
+                  <option value="name-desc">Name: Z–A</option>
+                </select>
+                <svg><use href="#i-chevron"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div id="store-closed-banner" class="store-closed-banner" role="status" hidden>
+        <strong>STORE CURRENTLY CLOSED</strong>
+        <span>Ordering is temporarily unavailable. Browse the menu — we'll be back soon.</span>
+      </div>
+      <section id="home" class="hero-section">
+        <div class="container">
+          <div class="hero-card">
+            <div class="hero-copy">
+              <p class="eyebrow"><span class="pulse-dot"></span> MADAPDAP'S LATE-NIGHT KITCHEN</p>
+              <h1>Your Korean<br>cravings, <span class="scribble">delivered.</span></h1>
+              <p class="hero-lead">Crispy wings, gooey cheese, and big trays for the barkada. Made fresh in Mabalacat and sent straight to your door.</p>
+              <div class="hero-actions">
+                <a href="#korean-cravings" class="btn btn-primary btn-large">
+                  Explore the menu
+                  <svg><use href="#i-arrow"/></svg>
+                </a>
+                <button type="button" id="hero-voice" class="btn btn-ghost btn-large">
+                  <span class="hero-mic"><svg><use href="#i-mic"/></svg></span>
+                  Talk to K-Bot
+                </button>
+              </div>
+              <div class="hero-meta">
+                <span><svg><use href="#i-clock"/></svg> 30–45 min delivery</span>
+                <span><svg><use href="#i-scooter"/></svg> Madapdap &amp; nearby</span>
+                <span><svg><use href="#i-star"/></svg> Made fresh to order</span>
+              </div>
+            </div>
+
+            <div class="hero-art" aria-hidden="true">
+              <div class="hero-image-wrap">
+                <img src="assets/images/wings.jpg" alt="">
+              </div>
+              <div class="hero-sticker sticker-top">
+                <span class="sticker-icon"><svg><use href="#i-spark"/></svg></span>
+                <span><small>THE CROWD PLEASER</small><strong>6pcs Wings with Flavor</strong></span>
+              </div>
+              <div class="hero-sticker sticker-bottom">
+                <span class="sticker-price">₱169</span>
+                <span><strong>Korean glazed</strong><small>4 flavors to choose</small></span>
+              </div>
+              <div class="hero-orbit">K</div>
+            </div>
+          </div>
+
+          <div class="shortcut-row" aria-label="Menu shortcuts">
+            <button type="button" class="shortcut-card" data-shortcut="wings">
+              <span class="shortcut-image"><img src="assets/images/wings.jpg" alt=""></span>
+              <span><strong>Wings &amp; Pops</strong><small>Crispy, saucy favorites</small></span>
+              <svg><use href="#i-arrow"/></svg>
+            </button>
+            <button type="button" class="shortcut-card" data-shortcut="trays">
+              <span class="shortcut-image"><img src="assets/images/wings-banban.jpg" alt=""></span>
+              <span><strong>Trays &amp; Bilao</strong><small>Made for sharing</small></span>
+              <svg><use href="#i-arrow"/></svg>
+            </button>
+            <button type="button" class="shortcut-card" data-shortcut="kimbap">
+              <span class="shortcut-image"><img src="assets/images/kimbap.jpg" alt=""></span>
+              <span><strong>Cheese Kimbap</strong><small>Rolled fresh daily</small></span>
+              <svg><use href="#i-arrow"/></svg>
+            </button>
+            <button type="button" class="shortcut-card" data-shortcut="silog">
+              <span class="shortcut-image"><img src="assets/images/silog-pork.jpg" alt=""></span>
+              <span><strong>Silog Meals</strong><small>Filipino comfort</small></span>
+              <svg><use href="#i-arrow"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div id="menu-status" class="menu-status" hidden>
+        <div class="container">
+          <div class="status-card">
+            <span class="status-icon"><svg><use href="#i-search"/></svg></span>
+            <h3>We couldn’t find that craving.</h3>
+            <p>Try a shorter word like “wings”, “cheese”, or “silog”.</p>
+            <button type="button" id="clear-filters" class="btn btn-secondary">Show everything</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="korean-cravings" class="menu-section section-korean" data-category="korean-cravings">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker"><span>01</span> KOREAN CRAVINGS</p>
+              <h2>Your Korean Cravings Provider</h2>
+              <p>Golden, glossy, and made for midnight. Pick your flavor and we’ll bring the heat.</p>
+            </div>
+            <div class="section-side-note">
+              <svg><use href="#i-spark"/></svg>
+              <span><strong>Flavor drop</strong><small>Buffalo · Soy Garlic · Cheese · Garlic Parmesan</small></span>
+            </div>
+          </div>
+          <div id="grid-korean-cravings" class="menu-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="trays-bilao" class="menu-section section-trays" data-category="trays-bilao">
+        <div class="pattern-strip" aria-hidden="true"></div>
+        <div class="container">
+          <div class="section-heading section-heading-trays">
+            <div>
+              <p class="section-kicker"><span>02</span> BIG-BATCH FAVORITES</p>
+              <h2>TRAYS AND BILAO</h2>
+              <p>For the whole barkada, the whole family, or the whole midnight meeting. Choose your flavors and let them fight over the last piece.</p>
+            </div>
+            <div class="tray-badge">
+              <span>16</span>
+              <i>to</i>
+              <span>32</span>
+              <small>pieces per tray</small>
+            </div>
+          </div>
+          <div id="grid-trays-bilao" class="menu-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="silog-meals" class="menu-section section-silog" data-category="silog-meals">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker"><span>03</span> FILIPINO COMFORT</p>
+              <h2>Silog Meals</h2>
+              <p>Garlic rice, a golden egg, and your choice of sauce. The kind of meal that fixes everything.</p>
+            </div>
+            <div class="silog-note">
+              <span class="silog-egg">EGG</span>
+              <span><strong>Make it a full meal</strong><small>Add extra rice or chili garlic for ₱15</small></span>
+            </div>
+          </div>
+          <div id="grid-silog-meals" class="menu-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="service-strip">
+        <div class="container service-grid">
+          <div class="service-intro">
+            <p class="eyebrow">FROM OUR KITCHEN TO YOUR DOOR</p>
+            <h2>Midnight made easy.</h2>
+            <p>No app fatigue. No complicated steps. Just good food, local delivery, and a voice guide if you need a hand.</p>
+            <button type="button" class="btn btn-primary" id="service-voice">
+              <svg><use href="#i-mic"/></svg>
+              Ask K-Bot
+            </button>
+          </div>
+          <div class="service-list">
+            <article><span>01</span><div><h3>Pick your craving</h3><p>Browse the menu or say what you want out loud.</p></div></article>
+            <article><span>02</span><div><h3>We cook it fresh</h3><p>Every wing, tray, and silog is made to order.</p></div></article>
+            <article><span>03</span><div><h3>Delivered around Mabalacat</h3><p>From Madapdap to nearby barangays, still hot.</p></div></article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer footer-compact">
+      <div class="container footer-compact-inner">
+        <a href="#home" class="brand brand-light">
+          <img src="assets/images/logokrave.jpg" alt="">
+          <span class="brand-type"><strong>MDNGHT</strong><small>K-RAVINGS</small></span>
+        </a>
+        <span class="footer-line">Mabalacat, Pampanga</span>
+        <span class="footer-meta">© <span id="footer-year"></span></span>
+      </div>
+    </footer>
+  </div>
+
+  <div id="screen-scrim" class="screen-scrim" hidden></div>
+
+  <!-- ITEM CUSTOMIZER -->
+  <div id="item-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-item></div>
+    <div class="item-modal-card" role="dialog" aria-modal="true" aria-labelledby="item-modal-title">
+      <button type="button" class="modal-close" id="item-modal-close" aria-label="Close item details"><svg><use href="#i-close"/></svg></button>
+      <div id="item-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV: Home / Search / My Order / Profile. Fixed to the
+       viewport bottom on phones only; the desktop keeps the header nav. -->
+  <nav id="bottom-nav" class="bottom-nav" aria-label="Mobile navigation">
+    <button type="button" data-bnav="home" class="is-active">
+      <svg aria-hidden="true"><use href="#i-home"/></svg><span>Home</span>
+    </button>
+    <button type="button" data-bnav="search">
+      <svg aria-hidden="true"><use href="#i-search"/></svg><span>Search</span>
+    </button>
+    <button type="button" data-bnav="orders">
+      <svg aria-hidden="true"><use href="#i-tray"/></svg><span>My Order</span>
+    </button>
+    <button type="button" data-bnav="profile">
+      <svg aria-hidden="true"><use href="#i-user"/></svg><span>Profile</span>
+    </button>
+  </nav>
+
+  <!-- CART -->
+  <aside id="cart-drawer" class="side-drawer cart-drawer" aria-hidden="true" aria-labelledby="cart-title">
+    <div class="drawer-header">
+      <div>
+        <p class="drawer-kicker">YOUR CRAVINGS</p>
+        <h2 id="cart-title">My order</h2>
+      </div>
+      <button type="button" class="modal-close drawer-close" id="cart-close" aria-label="Close cart"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <div id="cart-body" class="cart-body"></div>
+    <div id="cart-footer" class="cart-footer"></div>
+  </aside>
+
+  <!-- PROFILE -->
+  <aside id="profile-drawer" class="side-drawer profile-drawer" aria-hidden="true" aria-labelledby="profile-title">
+    <div class="drawer-header">
+      <div>
+        <p class="drawer-kicker">YOUR DETAILS</p>
+        <h2 id="profile-title">Profile</h2>
+      </div>
+      <button type="button" class="modal-close drawer-close" id="profile-close" aria-label="Close profile"><svg><use href="#i-close"/></svg></button>
+    </div>
+    <div id="profile-body" class="profile-body"></div>
+  </aside>
+
+  <!-- CHECKOUT -->
+  <div id="checkout-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-checkout></div>
+    <div class="checkout-card" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <button type="button" class="modal-close" id="checkout-close" aria-label="Close checkout"><svg><use href="#i-close"/></svg></button>
+      <div id="checkout-body"></div>
+    </div>
+  </div>
+
+  <!-- VOICE GUIDE -->
+  <button type="button" id="voice-launcher" class="voice-launcher" aria-label="Open the K-Bot voice guide">
+    <span class="voice-launcher-orb"><svg><use href="#i-mic"/></svg><i></i></span>
+    <span class="voice-launcher-copy"><small>Need a hand?</small><strong>Ask K-Bot</strong></span>
+  </button>
+
+  <section id="voice-panel" class="voice-panel" aria-hidden="true" aria-labelledby="voice-title">
+    <header class="voice-header">
+      <div class="voice-identity">
+        <span class="voice-avatar"><img src="assets/images/logokrave.jpg" alt=""></span>
+        <div><p>VOICE ORDERING</p><h2 id="voice-title">K-Bot</h2></div>
+      </div>
+      <button type="button" id="voice-close" class="voice-close" aria-label="Close voice guide"><svg><use href="#i-close"/></svg></button>
+    </header>
+    <div id="voice-log" class="voice-log" aria-live="polite" aria-label="K-Bot conversation"></div>
+    <footer class="voice-footer">
+      <p id="voice-status" class="voice-status">Tap the mic and tell me what you’re craving.</p>
+      <div class="voice-controls">
+        <button type="button" id="voice-mic" class="voice-mic" aria-label="Tap to speak to K-Bot">
+          <svg><use href="#i-mic"/></svg>
+        </button>
+        <button type="button" id="voice-sound" class="voice-sound">Sound on</button>
+      </div>
+    </footer>
+  </section>
+
+  <!-- Shown to signed-in admins only; the path is fetched, never stored here. -->
+  <button type="button" id="admin-return" class="admin-return" hidden>
+    <svg><use href="#i-lock"/></svg> Back to Admin
+  </button>
+
+  <button type="button" id="back-to-top" class="back-to-top" aria-label="Back to top" hidden>
+    <svg><use href="#i-up"/></svg>
+  </button>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/algorithms.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/assistant.js"></script>
+</body>
+</html>

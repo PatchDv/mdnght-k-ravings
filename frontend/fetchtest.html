@@ -1,0 +1,1 @@
+﻿<!doctype html><body><div id="x">init</div><script>fetch("/api/menu").then(r=>r.json()).then(j=>{x.textContent="OK items:" + j.data.categories.reduce((n,c)=>n+c.items.length,0)}).catch(e=>{x.textContent="FAIL:" + e})</script>

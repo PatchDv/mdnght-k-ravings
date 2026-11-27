@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a213d">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Kitchen Board | MDNGHT K-RAVINGS</title>
+  <script>
+    // Styles and scripts live in /frontend. Served by the app at :3000 -> site
+    // root; opened straight from disk (or a static mirror) -> this page sits in
+    // backend/views, so walk up to frontend/. <base> only affects relative
+    // URLs, so the tags below stay relative on purpose.
+    document.write('<base href="' + (location.protocol === "file:" || (location.port && location.port !== "3000") ? "../../frontend/" : "/") + '">');
+  </script>
+  <link rel="icon" type="image/jpeg" href="assets/images/logokrave.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-4M12.5 16V7M17 16v-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.5 8.5h13l-1 12h-11l-1-12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-tray" viewBox="0 0 24 24"><path d="M3 15.5h18l-2 4H5l-2-4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M6 15.5c.6-4.6 2.6-7 6-7s5.4 2.4 6 7M9 5.5c0 1 .5 1.5 1.3 2M14 4c0 1.2-.5 1.8-1.5 2.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="m16 16 4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3.5 17.5 9 12l3.5 3.5L20.5 7.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 7.5h5v5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 9.5 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 6.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 16.9l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" fill="currentColor"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7 4.5h3l1.4 4-2 1.4a13 13 0 0 0 4.7 4.7l1.4-2 4 1.4v3c0 1.3-1.1 2.3-2.4 2.2C10 18.6 5.4 14 4.8 6.9 4.7 5.6 5.7 4.5 7 4.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10.1c0 5.4-8 11-8 11s-8-5.6-8-11a8 8 0 1 1 16 0Z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.2 10V7.5a3.8 3.8 0 0 1 7.6 0V10" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.4" r="3.4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.8 19.5a6.4 6.4 0 0 1 12.4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16.5 5.5a3.2 3.2 0 0 1 0 6M18 19.5h3.4a5.8 5.8 0 0 0-3.4-5.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8M17 8l4 4-4 4M21 12H10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.4M20 4v7h-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.8c.7 4.8 3.7 7.8 8.5 8.5-4.8.7-7.8 3.7-8.5 8.5-.7-4.8-3.7-7.8-8.5-8.5 4.8-.7 7.8-3.7 8.5-8.5Z" fill="currentColor"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3ZM14 8l2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="9.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m5 18 5-5 3 3 3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4.5h6V7M7.5 7l.8 13h7.4l.8-13M10.2 10.5v6M13.8 10.5v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  </svg>
+
+  <!-- APP -->
+  <div id="admin-app" class="admin-app" hidden>
+    <div class="drawer-scrim" id="drawer-scrim" hidden></div>
+    <aside class="admin-sidebar">
+      <div class="sidebar-drawer-head">
+        <a class="admin-brand" href="index.html" aria-label="MDNGHT K-RAVINGS storefront">
+          <img src="assets/images/logokrave.jpg" alt="">
+          <span><strong>MDNGHT</strong><small>K-RAVINGS</small></span>
+        </a>
+        <button type="button" class="admin-icon-btn sidebar-close" id="drawer-close" aria-label="Close navigation">
+          <svg><use href="#i-close"/></svg>
+        </button>
+      </div>
+
+      <p class="sidebar-label">KITCHEN BOARD</p>
+      <nav class="sidebar-nav" id="admin-sidebar-nav" aria-label="Admin sections">
+        <button type="button" class="sidebar-link is-active" data-view="insights">
+          <svg><use href="#i-chart"/></svg>
+          <span>Overview</span>
+        </button>
+        <button type="button" class="sidebar-link" data-view="orders">
+          <svg><use href="#i-bag"/></svg>
+          <span>Orders</span>
+          <i id="sidebar-order-count" class="sidebar-count" hidden>0</i>
+        </button>
+        <button type="button" class="sidebar-link" data-view="customers">
+          <svg><use href="#i-users"/></svg>
+          <span>Customers</span>
+        </button>
+        <button type="button" class="sidebar-link" data-view="menu">
+          <svg><use href="#i-grid"/></svg>
+          <span>Menu</span>
+        </button>
+        <button type="button" class="sidebar-link" data-view="profit">
+          <svg><use href="#i-trend"/></svg>
+          <span>Profit</span>
+        </button>
+        <button type="button" class="sidebar-link" data-view="profile">
+          <svg><use href="#i-user"/></svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button type="button" class="sidebar-link" id="refresh-button">
+          <svg><use href="#i-refresh"/></svg>
+          <span>Refresh data</span>
+        </button>
+        <a class="sidebar-link" href="index.html">
+          <svg><use href="#i-arrow"/></svg>
+          <span>View storefront</span>
+        </a>
+        <button type="button" class="sidebar-link" id="drawer-logout">
+          <svg><use href="#i-logout"/></svg>
+          <span>Sign out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <button type="button" class="admin-icon-btn nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="admin-sidebar-nav">
+        <svg><use href="#i-menu"/></svg>
+      </button>
+
+      <header class="admin-rail">
+        <span class="rail-live" title="The board refreshes itself every 20 seconds"><i></i> Live</span>
+        <span class="rail-date" id="admin-date"></span>
+        <span class="rail-user">
+          <span class="admin-avatar" id="admin-avatar">K</span>
+          <span class="rail-name" id="rail-name">Kitchen Admin</span>
+        </span>
+      </header>
+
+      <main class="admin-content">
+        <!-- INSIGHTS -->
+        <section class="admin-view" id="view-insights" data-view-panel>
+          <div class="welcome-strip">
+            <div>
+              <p class="eyebrow" id="insight-greeting">GOOD EVENING, KITCHEN CREW</p>
+              <h2 id="insight-headline">Here's how the night is going.</h2>
+              <p>Live numbers from the storefront. Best sellers update as orders come in.</p>
+            </div>
+            <div class="welcome-strip-badge store-control">
+              <div class="store-control-head">
+                <span><svg><use href="#i-clock"/></svg></span>
+                <p><small>Store status</small><strong id="store-status-label">Open</strong></p>
+                <label class="switch" aria-label="Open or close the storefront">
+                  <input type="checkbox" id="store-open-toggle" checked>
+                  <span class="switch-track"><span class="switch-thumb"></span></span>
+                </label>
+              </div>
+              <p class="store-fee-note">Quote fees in Order flow. ₱400+ is free delivery.</p>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <article class="stat-card stat-revenue">
+              <div class="stat-head"><span>Total revenue</span><span class="stat-icon"><svg><use href="#i-chart"/></svg></span></div>
+              <strong id="stat-revenue">₱0</strong>
+              <p><span class="stat-dot"></span> All non-cancelled orders</p>
+            </article>
+            <article class="stat-card">
+              <div class="stat-head"><span>Orders received</span><span class="stat-icon"><svg><use href="#i-bag"/></svg></span></div>
+              <strong id="stat-orders">0</strong>
+              <p><span class="stat-dot"></span> Lifetime orders</p>
+            </article>
+            <article class="stat-card">
+              <div class="stat-head"><span>Average order</span><span class="stat-icon"><svg><use href="#i-star"/></svg></span></div>
+              <strong id="stat-average">₱0</strong>
+              <p><span class="stat-dot"></span> Per craving</p>
+            </article>
+            <article class="stat-card stat-dark">
+              <div class="stat-head"><span>In the kitchen now</span><span class="stat-icon"><svg><use href="#i-tray"/></svg></span></div>
+              <strong id="stat-active">0</strong>
+              <p><span class="stat-dot"></span> Active orders to move</p>
+            </article>
+          </div>
+
+          <div class="insight-grid">
+            <article class="panel chart-panel">
+              <header class="panel-head">
+                <div><p class="panel-kicker">LAST 7 DAYS</p><h3>Sales rhythm</h3></div>
+                <span class="panel-note">Revenue per day</span>
+              </header>
+              <div id="sales-chart" class="sales-chart" aria-label="Revenue for the last seven days"></div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <div><p class="panel-kicker">CUSTOMER FAVORITES</p><h3>Best sellers</h3></div>
+                <span class="panel-note" id="best-seller-note">All time</span>
+              </header>
+              <div id="best-sellers" class="best-seller-list"></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <div><p class="panel-kicker">LATEST CRAVINGS</p><h3>Recent orders</h3></div>
+              <button type="button" class="panel-link" data-go-view="orders">See the order flow <svg><use href="#i-arrow"/></svg></button>
+            </header>
+            <div id="recent-orders" class="recent-orders"></div>
+          </article>
+        </section>
+
+        <!-- PROFIT -->
+        <section class="admin-view" id="view-profit" data-view-panel hidden>
+          <div class="view-head">
+            <div>
+              <p class="eyebrow">PROFIT</p>
+              <h2>Simple numbers. Real money.</h2>
+              <p>Delivered orders only. Profit = revenue &minus; product costs &minus; expenses. Costs missing? The card is labelled "estimated".</p>
+            </div>
+            <div class="profit-controls">
+              <select id="profit-mode" class="admin-inline-select" aria-label="Data mode">
+                <option value="all">All data</option>
+                <option value="demo">Demo data</option>
+                <option value="real">Real data</option>
+              </select>
+              <button type="button" class="admin-btn admin-btn-ghost admin-btn-sm" id="profit-seed-demo">Load demo</button>
+              <button type="button" class="admin-btn admin-btn-ghost admin-btn-sm profit-danger" id="profit-clear-demo">Remove demo</button>
+            </div>
+          </div>
+
+          <div class="stat-grid" id="profit-cards"></div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <div><p class="panel-kicker">LAST 14 DAYS</p><h3>Money per day</h3></div>
+              <div class="profit-filter" id="profit-filter" role="group" aria-label="Date filter"></div>
+            </header>
+            <div id="profit-chart" class="profit-chart" aria-label="Revenue, expenses and profit per day"></div>
+            <div class="profit-legend" aria-hidden="true">
+              <span><i class="legend-dot legend-revenue"></i>Revenue</span>
+              <span><i class="legend-dot legend-expenses"></i>Expenses</span>
+              <span><i class="legend-dot legend-profit"></i>Profit</span>
+            </div>
+          </article>
+
+          <div class="insight-grid">
+            <article class="panel">
+              <header class="panel-head">
+                <div><p class="panel-kicker">BUSINESS SPEND</p><h3>Expenses</h3></div>
+              </header>
+              <div class="profit-expense-row">
+                <input type="text" id="expense-label" class="admin-inline-input" placeholder="What was it for?" maxlength="120">
+                <input type="number" id="expense-amount" class="admin-inline-input profit-expense-amount" placeholder="P" min="1">
+                <input type="date" id="expense-date" class="admin-inline-input">
+                <button type="button" class="admin-btn admin-btn-primary admin-btn-sm" id="expense-add">Add</button>
+              </div>
+              <div id="expense-list" class="expense-list"></div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <div><p class="panel-kicker">PRODUCT COSTS</p><h3>What each dish costs you</h3></div>
+                <span class="panel-note">Fill these in for exact profit</span>
+              </header>
+              <div id="cost-editor" class="cost-editor"></div>
+            </article>
+          </div>
+        </section>
+        <!-- MENU -->
+        <section class="admin-view" id="view-menu" data-view-panel hidden>
+          <div class="view-head">
+            <div>
+              <p class="eyebrow">MENU STUDIO</p>
+              <h2>Keep the cravings current.</h2>
+              <p>Adjust a price, swap a photo, or add something new. Changes go live on the storefront immediately.</p>
+            </div>
+            <button type="button" class="admin-btn admin-btn-primary" id="add-dish">
+              <svg><use href="#i-plus"/></svg> Add a dish
+            </button>
+          </div>
+
+          <div class="menu-toolbar">
+            <label class="admin-search">
+              <svg><use href="#i-search"/></svg>
+              <input id="admin-menu-search" type="search" placeholder="Find a dish..." autocomplete="off" aria-label="Find a dish">
+            </label>
+            <label class="admin-select">
+              <span>Section</span>
+              <div class="admin-select-wrap">
+                <select id="admin-category-filter" aria-label="Filter by menu section">
+                  <option value="all">All sections</option>
+                </select>
+                <svg><use href="#i-chevron"/></svg>
+              </div>
+            </label>
+            <p class="menu-count" id="admin-menu-count"></p>
+          </div>
+
+          <div class="panel menu-panel">
+            <div id="admin-menu-list" class="admin-menu-list"></div>
+          </div>
+        </section>
+
+        <!-- ORDERS -->
+        <section class="admin-view" id="view-orders" data-view-panel hidden>
+          <div class="view-head">
+            <div>
+              <p class="eyebrow">ORDER FLOW</p>
+              <h2>Keep every craving moving.</h2>
+              <p>Quote the delivery fee, then move an order along — the customer sees each step in My Order.</p>
+            </div>
+            <label class="admin-select">
+              <span>Show</span>
+              <div class="admin-select-wrap">
+                <select id="order-status-filter" aria-label="Filter orders by status">
+                  <option value="all">All orders</option>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="preparing">Preparing</option>
+                  <option value="delivering">On the way</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+                <svg><use href="#i-chevron"/></svg>
+              </div>
+            </label>
+          </div>
+          <div id="order-queue-head"></div>
+          <div id="admin-orders" class="admin-orders"></div>
+        </section>
+
+        <!-- CUSTOMERS -->
+        <section class="admin-view" id="view-customers" data-view-panel hidden>
+          <div class="view-head">
+            <div>
+              <p class="eyebrow">CUSTOMERS</p>
+              <h2>Everyone who came for a craving.</h2>
+              <p>Records built from real orders. Tap a customer to see their order history.</p>
+            </div>
+            <label class="admin-select order-filter">
+              <span>Search</span>
+              <input type="search" id="customer-search" class="admin-inline-input" placeholder="Name or phone" maxlength="60" autocomplete="off">
+            </label>
+          </div>
+          <div id="customer-list" class="customer-list"><p class="panel-empty">Loading customers...</p></div>
+        </section>
+
+        <!-- PROFILE -->
+        <section class="admin-view" id="view-profile" data-view-panel hidden>
+          <div class="view-head">
+            <div>
+              <p class="eyebrow">ACCOUNT</p>
+              <h2>Your kitchen profile.</h2>
+              <p>Update how you appear on the board, or rotate your password.</p>
+            </div>
+          </div>
+
+          <div class="profile-grid">
+            <article class="profile-card profile-id-card">
+              <span class="admin-avatar admin-avatar-lg" id="profile-avatar">K</span>
+              <div>
+                <strong id="account-name">Kitchen Admin</strong>
+                <small id="account-username">admin</small>
+                <span class="profile-role-chip"><svg><use href="#i-lock"/></svg> Administrator</span>
+              </div>
+            </article>
+
+            <article class="profile-card">
+              <header class="profile-card-head"><h3>Profile details</h3><small>Saved to the kitchen board</small></header>
+              <form id="profile-form">
+                <label class="admin-field"><span>Display name</span><input id="profile-name" maxlength="80" required></label>
+                <label class="admin-field"><span>Username (read-only)</span><input id="profile-username" disabled></label>
+                <label class="admin-field"><span>Role</span><input value="Administrator" disabled></label>
+                <label class="admin-field"><span>Member since</span><input id="profile-created" disabled></label>
+                <p class="login-error" id="profile-error" role="alert"></p>
+                <div class="profile-form-actions">
+                  <button type="reset" class="admin-btn admin-btn-ghost" id="profile-cancel">Cancel</button>
+                  <button type="submit" class="admin-btn admin-btn-primary" id="profile-save">Save changes</button>
+                </div>
+              </form>
+            </article>
+
+            <article class="profile-card">
+              <header class="profile-card-head"><h3>Change password</h3><small>Minimum 8 characters</small></header>
+              <form id="password-form">
+                <label class="admin-field"><span>Current password</span><input id="profile-current" type="password" required autocomplete="current-password"></label>
+                <label class="admin-field"><span>New password</span><input id="profile-new" type="password" required minlength="8" autocomplete="new-password" placeholder="••••••••"></label>
+                <label class="admin-field"><span>Confirm new password</span><input id="profile-confirm" type="password" required minlength="8" autocomplete="new-password" placeholder="••••••••"></label>
+                <p class="login-error" id="password-error" role="alert"></p>
+                <div class="profile-form-actions">
+                  <button type="reset" class="admin-btn admin-btn-ghost" id="password-cancel">Cancel</button>
+                  <button type="submit" class="admin-btn admin-btn-primary" id="password-save">Update password</button>
+                </div>
+              </form>
+            </article>
+
+            <article class="profile-card profile-danger">
+              <header class="profile-card-head"><h3>Session</h3></header>
+              <p>Signing out clears this board's admin session on this device.</p>
+              <button type="button" class="admin-btn admin-btn-ghost admin-signout" id="profile-logout"><svg><use href="#i-logout"/></svg> Sign out</button>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- EDITOR -->
+  <div id="editor-modal" class="admin-modal" aria-hidden="true">
+    <div class="admin-modal-backdrop" data-close-editor></div>
+    <div class="editor-card" role="dialog" aria-modal="true" aria-labelledby="editor-title">
+      <header class="editor-head">
+        <div>
+          <p>MENU STUDIO</p>
+          <h2 id="editor-title">Dish details</h2>
+        </div>
+        <button type="button" class="admin-icon-btn" id="editor-close" aria-label="Close editor"><svg><use href="#i-close"/></svg></button>
+      </header>
+      <form id="editor-form">
+        <div id="editor-body" class="editor-body"></div>
+        <footer class="editor-foot">
+          <p id="editor-error" class="editor-error" role="alert"></p>
+          <button type="button" class="admin-btn admin-btn-danger" id="editor-delete" hidden>Remove dish</button>
+          <button type="button" class="admin-btn admin-btn-ghost" id="editor-cancel">Cancel</button>
+          <button type="submit" class="admin-btn admin-btn-primary" id="editor-save">Save changes</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div id="admin-toast-stack" class="admin-toast-stack" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/algorithms.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:2500px; height:1440px; position:relative; background:#fbfcfe; font-family:'Segoe UI', Arial, sans-serif; }
+  .title { position:absolute; top:14px; left:0; width:100%; text-align:center; font-size:26px; font-weight:800; color:#1a213d; letter-spacing:.4px; }
+  .title small { display:block; font-size:14px; font-weight:600; color:#5a6b85; margin-top:3px; }
+  .legend { position:absolute; top:80px; left:0; width:100%; text-align:center; font-size:14px; color:#37474f; }
+  .legend b { color:#1a213d; }
+  .legend .sep { color:#b0bccd; margin:0 12px; }
+  .zone { position:absolute; border:2.5px dashed; border-radius:18px; }
+  .zlabel { position:absolute; top:-16px; left:26px; padding:5px 16px; border-radius:999px; color:#fff; font-size:15px; font-weight:800; letter-spacing:1.2px; box-shadow:0 3px 8px rgba(0,0,0,.18); }
+  .zdesc { position:absolute; top:26px; right:22px; font-size:12.5px; font-style:italic; color:#607080; }
+  .box { position:absolute; background:#fff; border:1.6px solid #3a4a5f; border-left-width:5px; border-radius:10px; box-shadow:0 5px 16px rgba(15,25,45,.14); padding:9px 12px 7px; z-index:10; }
+  .box h4 { font-size:14.5px; font-weight:800; color:#1a213d; margin-bottom:3px; }
+  .box p { font-size:11.5px; color:#5c6b80; line-height:1.3; }
+  svg { position:absolute; inset:0; z-index:5; }
+  svg text { font-family:'Segoe UI', Arial, sans-serif; }
+  .cap { fill:#455a64; font-size:11.5px; font-style:italic; paint-order:stroke; stroke:#fbfcfe; stroke-width:5px; }
+  .yn { fill:#1a213d; font-size:13.5px; font-weight:800; paint-order:stroke; stroke:#fbfcfe; stroke-width:5px; }
+</style>
+</head>
+<body>
+
+<div class="title">MDNGHT K-RAVINGS — System Flow
+  <small>how one craving travels from the storefront to the door — and how it can start with a voice</small>
+</div>
+<div class="legend">
+  <b>rounded box</b> = a step <span class="sep">|</span> <b>diamond</b> = a decision <span class="sep">|</span>
+  <b>──▶</b> = flow direction <span class="sep">|</span>
+  colors: <b style="color:#1565c0;">blue customer</b> · <b style="color:#2e7d32;">green server</b> · <b style="color:#c17900;">amber admin</b> · <b style="color:#6a1b9a;">purple K-Bot</b>
+</div>
+
+<!-- ══════════ ZONES ══════════ -->
+<div class="zone" style="left:40px; top:120px; width:2420px; height:310px; background:#e5f0fb; border-color:#64b5f6;">
+  <span class="zlabel" style="background:#1565c0;">CUSTOMER · STOREFRONT</span>
+  <span class="zdesc">what the customer does</span>
+</div>
+<div class="zone" style="left:40px; top:470px; width:2420px; height:290px; background:#e7f4e8; border-color:#66bb6a;">
+  <span class="zlabel" style="background:#2e7d32;">SERVER · RULES &amp; DATA</span>
+  <span class="zdesc">rules enforced on the server — the browser never decides money</span>
+</div>
+<div class="zone" style="left:40px; top:790px; width:2420px; height:300px; background:#fdf3dd; border-color:#e0a32e;">
+  <span class="zlabel" style="background:#c17900;">ADMIN · KITCHEN BOARD</span>
+  <span class="zdesc">what the kitchen crew does</span>
+</div>
+<div class="zone" style="left:40px; top:1130px; width:2420px; height:250px; background:#f4ecf8; border-color:#ba68c8;">
+  <span class="zlabel" style="background:#6a1b9a;">K-BOT · VOICE ORDERING</span>
+  <span class="zdesc">order without typing</span>
+</div>
+
+<!-- ══════════ ARROWS ══════════ -->
+<svg width="2500" height="1440">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="8" refX="7.5" refY="4" orient="auto">
+      <polygon points="0 0, 9 4, 0 8" fill="#37474f"/>
+    </marker>
+    <marker id="arrg" markerWidth="9" markerHeight="8" refX="7.5" refY="4" orient="auto">
+      <polygon points="0 0, 9 4, 0 8" fill="#78909c"/>
+    </marker>
+    <marker id="arrp" markerWidth="9" markerHeight="8" refX="7.5" refY="4" orient="auto">
+      <polygon points="0 0, 9 4, 0 8" fill="#6a1b9a"/>
+    </marker>
+  </defs>
+
+  <!-- customer lane -->
+  <line x1="300" y1="242" x2="336" y2="242" stroke="#78909c" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arrg)"/>
+  <line x1="570" y1="242" x2="606" y2="242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="840" y1="242" x2="876" y2="242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1110" y1="242" x2="1146" y2="242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1380" y1="242" x2="1416" y2="242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1670" y1="242" x2="1706" y2="242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- checkout -> server re-price -->
+  <polyline points="1815,290 1815,450 225,450 225,526" fill="none" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text class="cap" x="1020" y="442" text-anchor="middle">the server prices every order — the browser never decides money</text>
+
+  <!-- server lane -->
+  <line x1="380" y1="580" x2="461" y2="580" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="655" y1="556" x2="716" y2="558" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text class="yn" x="662" y="544">yes</text>
+  <line x1="655" y1="606" x2="716" y2="664" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text class="yn" x="662" y="650">no</text>
+  <line x1="980" y1="560" x2="1056" y2="590" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="980" y1="670" x2="1056" y2="634" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1360" y1="600" x2="1426" y2="600" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- receipt back up to customer -->
+  <polyline points="1710,600 2100,600 2100,294" fill="none" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text class="cap" x="1902" y="624" text-anchor="middle">receipt issued to the customer</text>
+
+  <!-- new order down to admin board -->
+  <polyline points="1210,655 1210,745 575,745 575,856" fill="none" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text class="cap" x="820" y="738" text-anchor="middle">new order lands on the kitchen board</text>
+
+  <!-- admin lane -->
+  <line x1="370" y1="907" x2="426" y2="907" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="720" y1="907" x2="776" y2="907" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1020" y1="907" x2="1076" y2="907" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1420" y1="907" x2="1476" y2="907" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- status updates back up to customer -->
+  <polyline points="1780,907 2050,907 2050,294" fill="none" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text class="cap" x="1915" y="932" text-anchor="middle">status updates reach My Order</text>
+
+  <!-- k-bot lane -->
+  <line x1="270" y1="1242" x2="306" y2="1242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="1242" x2="636" y2="1242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="930" y1="1242" x2="966" y2="1242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1270" y1="1242" x2="1306" y2="1242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="1540" y1="1242" x2="1576" y2="1242" stroke="#37474f" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- confirmed voice order up to My Order -->
+  <polyline points="1880,1242 2440,1242 2440,160 1265,160 1265,191" fill="none" stroke="#6a1b9a" stroke-width="2.5" stroke-dasharray="9 6" marker-end="url(#arrp)"/>
+  <text class="cap" x="1855" y="152" text-anchor="middle" style="fill:#6a1b9a;">confirmed voice order enters My Order</text>
+
+  <!-- decision diamond -->
+  <polygon points="465,580 560,520 655,580 560,640" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="560" y="576" text-anchor="middle" font-size="13" font-weight="800" fill="#1a213d">Subtotal ≥</text>
+  <text x="560" y="594" text-anchor="middle" font-size="13" font-weight="800" fill="#1a213d">400 pesos?</text>
+</svg>
+
+<!-- ══════════ CUSTOMER LANE ══════════ -->
+<div class="box" style="left:70px; top:195px; width:230px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">Open the storefront</h4><p>Madapdap's late-night menu, live from the database</p>
+</div>
+<div class="box" style="left:340px; top:195px; width:230px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">First-visit form</h4><p>name · barangay · address — asked only once</p>
+</div>
+<div class="box" style="left:610px; top:195px; width:230px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">Browse or search</h4><p>exact · partial · typo-tolerant match</p>
+</div>
+<div class="box" style="left:880px; top:195px; width:230px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">Customize the dish</h4><p>flavors · extras · add-ons · quantity</p>
+</div>
+<div class="box" style="left:1150px; top:195px; width:230px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">Add to My Order</h4><p>cart saved to the account</p>
+</div>
+<div class="box" style="left:1420px; top:195px; width:250px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">Sign in / create account</h4><p>one-time SMS code verifies the phone</p>
+</div>
+<div class="box" style="left:1710px; top:195px; width:210px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">Checkout</h4><p>cash on delivery</p>
+</div>
+<div class="box" style="left:1960px; top:195px; width:280px; height:95px; border-left-color:#1565c0;">
+  <h4 style="color:#1565c0;">Receipt</h4><p>order number · fee line · total · 30–45 min</p>
+</div>
+
+<!-- ══════════ SERVER LANE ══════════ -->
+<div class="box" style="left:70px; top:530px; width:310px; height:100px; border-left-color:#2e7d32;">
+  <h4 style="color:#2e7d32;">Re-price every line</h4><p>unit prices and extras re-read from menu_items — the client's numbers are ignored</p>
+</div>
+<div class="box" style="left:720px; top:525px; width:260px; height:70px; border-left-color:#2e7d32;">
+  <h4 style="color:#2e7d32;">Free delivery</h4><p>fee = 0, marked as set</p>
+</div>
+<div class="box" style="left:720px; top:635px; width:260px; height:70px; border-left-color:#2e7d32;">
+  <h4 style="color:#2e7d32;">Fee pending</h4><p>"to be confirmed" — never a fake zero</p>
+</div>
+<div class="box" style="left:1060px; top:545px; width:300px; height:110px; border-left-color:#2e7d32;">
+  <h4 style="color:#2e7d32;">Save the order</h4><p>orders + order_items rows written to SQLite inside one transaction</p>
+</div>
+<div class="box" style="left:1430px; top:545px; width:280px; height:110px; border-left-color:#2e7d32;">
+  <h4 style="color:#2e7d32;">Same numbers everywhere</h4><p>receipt, board, and history all read the stored subtotal, fee, and total</p>
+</div>
+
+<!-- ══════════ ADMIN LANE ══════════ -->
+<div class="box" style="left:70px; top:860px; width:300px; height:95px; border-left-color:#ef6c00;">
+  <h4 style="color:#c17900;">Hidden staff door</h4><p>sign-in limited: 5 tries, 5-minute cooldown</p>
+</div>
+<div class="box" style="left:430px; top:860px; width:290px; height:95px; border-left-color:#ef6c00;">
+  <h4 style="color:#c17900;">Order Flow board</h4><p>FIFO queue — "Next up to cook"</p>
+</div>
+<div class="box" style="left:780px; top:860px; width:240px; height:95px; border-left-color:#ef6c00;">
+  <h4 style="color:#c17900;">Quote the fee</h4><p>10 / 15 / 20 pesos (orders under 400)</p>
+</div>
+<div class="box" style="left:1080px; top:860px; width:340px; height:95px; border-left-color:#ef6c00;">
+  <h4 style="color:#c17900;">Move the order along</h4><p>confirmed → preparing → delivering → delivered</p>
+</div>
+<div class="box" style="left:1480px; top:860px; width:300px; height:95px; border-left-color:#ef6c00;">
+  <h4 style="color:#c17900;">Notify + record</h4><p>SMS to the customer · audit log entry</p>
+</div>
+
+<!-- ══════════ K-BOT LANE ══════════ -->
+<div class="box" style="left:70px; top:1195px; width:200px; height:95px; border-left-color:#6a1b9a;">
+  <h4 style="color:#6a1b9a;">Tap the mic</h4><p>Chrome or Edge</p>
+</div>
+<div class="box" style="left:310px; top:1195px; width:290px; height:95px; border-left-color:#6a1b9a;">
+  <h4 style="color:#6a1b9a;">Speak the order</h4><p>"add 2 cheese kimbap"</p>
+</div>
+<div class="box" style="left:640px; top:1195px; width:290px; height:95px; border-left-color:#6a1b9a;">
+  <h4 style="color:#6a1b9a;">Match the live menu</h4><p>exact → partial → typo-tolerant</p>
+</div>
+<div class="box" style="left:970px; top:1195px; width:300px; height:95px; border-left-color:#6a1b9a;">
+  <h4 style="color:#6a1b9a;">Clarify or correct</h4><p>missing choice? "change it to 3", "remove that"</p>
+</div>
+<div class="box" style="left:1310px; top:1195px; width:230px; height:95px; border-left-color:#6a1b9a;">
+  <h4 style="color:#6a1b9a;">Read it back</h4><p>dishes and prices out loud</p>
+</div>
+<div class="box" style="left:1580px; top:1195px; width:300px; height:95px; border-left-color:#6a1b9a;">
+  <h4 style="color:#6a1b9a;">Spoken "yes"</h4><p>only now do the items enter My Order</p>
+</div>
+
+</body>
+</html>

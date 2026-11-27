@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">MDNGHT K-RAVINGS moon bowl logo</title>
+  <rect x="3" y="3" width="90" height="90" rx="27" fill="#fec714"/>
+  <circle cx="48" cy="50" r="31" fill="#1a213d"/>
+  <path d="M28 53c3 13 11 21 23 21 12 0 21-8 24-20" fill="none" stroke="#fec714" stroke-width="6" stroke-linecap="round"/>
+  <path d="M34 43c3-7 9-12 17-14M48 26c-2 5-2 9 0 13M57 30c3 4 4 8 3 12" fill="none" stroke="#fec714" stroke-width="4" stroke-linecap="round"/>
+  <path d="m65 22 3.7 7.5 8.3 1.2-6 5.8 1.4 8.2-7.4-3.9-7.4 3.9 1.4-8.2-6-5.8 8.3-1.2L65 22Z" fill="#be2328"/>
+  <circle cx="41" cy="65" r="2.8" fill="#fec714"/>
+  <circle cx="54" cy="65" r="2.8" fill="#fec714"/>
+</svg>
